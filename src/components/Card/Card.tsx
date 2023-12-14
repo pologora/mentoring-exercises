@@ -1,5 +1,4 @@
 import style from './card.module.css';
-import { AiFillAlert } from 'react-icons/ai';
 
 type CardProps = {
   imgSrc: string;
@@ -24,7 +23,6 @@ const Card = ({
 }: CardProps) => {
   return (
     <div className={style.card}>
-      <AiFillAlert />
       <div className={style.avatar}>
         <img src={imgSrc} alt='User avatar' className={style.avatarImg} />
       </div>

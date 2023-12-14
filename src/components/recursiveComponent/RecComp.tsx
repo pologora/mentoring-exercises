@@ -24,6 +24,12 @@ function RecComp({ data }: RecCompParams) {
   const commentsList = data.map((item) => (
     <CommentItem key={item.comment} {...item} />
   ));
-  return <div className={style.container}>{commentsList}</div>;
+
+  return (
+    <div>
+      <div className={style.container}>{commentsList}</div>
+    </div>
+  );
 }
+
 export default RecComp;

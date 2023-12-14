@@ -1,0 +1,10 @@
+.toggleMenuButton {
+  padding: 0.5rem 1rem;
+  margin: 1rem;
+}
+
+.menuContainer {
+  border: 1px solid red;
+  height: 100px;
+  padding: 1rem;
+}
