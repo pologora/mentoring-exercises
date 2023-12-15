@@ -63,6 +63,7 @@ const Posts = () => {
           className={style.pageChangeBtn}
           name='left'
           onClick={() => pageChangeHandler('left')}
+          disabled={page <= 1}
         >
           👈🏽
         </button>
@@ -71,6 +72,7 @@ const Posts = () => {
           className={style.pageChangeBtn}
           name='right'
           onClick={() => pageChangeHandler('right')}
+          disabled={page >= pagesQuantity}
         >
           👉🏽
         </button>
