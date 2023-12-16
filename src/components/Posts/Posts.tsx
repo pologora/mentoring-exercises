@@ -1,6 +1,7 @@
+import useApi from '../../hooks/useApi';
 import Post from './Post';
 import style from './Posts.module.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface IPost {
   body: string;
@@ -9,36 +10,25 @@ interface IPost {
   userId: number;
 }
 
+interface PostApiResult {
+  data: IPost[] | null;
+  isLoading: boolean;
+  isError: boolean;
+}
+
 const POSTS_PER_PAGE = 4;
+const postsApiUrl = 'https://jsonplaceholder.typicode.com/posts';
 
 const Posts = () => {
-  const [postsData, setPostsData] = useState<IPost[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const { data, isLoading, isError }: PostApiResult = useApi(postsApiUrl);
   const [page, setPage] = useState(1);
 
-  const pagesQuantity = Math.ceil(postsData.length / POSTS_PER_PAGE);
+  const pagesQuantity = data ? Math.ceil(data?.length / POSTS_PER_PAGE) : 0;
   const postsToIgnore = POSTS_PER_PAGE * (page - 1);
-  const postsForRender = postsData?.slice(
+  const postsForRender = data?.slice(
     postsToIgnore,
     postsToIgnore + POSTS_PER_PAGE
   );
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-        const url = 'https://jsonplaceholder.typicode.com/posts';
-        const res = await fetch(url);
-        const data: IPost[] = await res.json();
-        setPostsData(data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
 
   const pageChangeHandler = (name: 'left' | 'right') => {
     if (name === 'left' && page > 1) {
@@ -48,13 +38,23 @@ const Posts = () => {
     }
   };
 
-  const renderedPosts = postsForRender?.map((post) => (
+  const renderedPosts = postsForRender?.map((post: IPost) => (
     <Post title={post.title} body={post.body} key={post.id} />
   ));
+
+  if (isError) {
+    return (
+      <div>
+        <p>Something went wrong while fetching data.</p>
+        <p>Please try again later or contact support.</p>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
   return (
     <div>
       <div className={style.postsList}>{renderedPosts}</div>
