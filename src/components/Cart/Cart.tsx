@@ -17,7 +17,7 @@ export type ChangeCartItemQuantityAction = 'increase' | 'decrease';
 
 function updateQuantity(
   state: typeof initialState,
-  item: Product | null | undefined,
+  item: Product | undefined,
   quantityModifier: number
 ) {
   const updatedState = state.map((cartItem) => {
@@ -33,12 +33,16 @@ function updateQuantity(
   return updatedState;
 }
 
+function removeFromCart(state: typeof initialState, item: Product | undefined) {
+  return state.filter((product) => product.item.name != item!.name);
+}
+
 type ActionType =
   | { type: 'addItem'; payload: Product }
   | { type: 'removeItem'; payload: Product }
   | { type: 'decreaseItemQuantity'; payload: Product }
   | { type: 'increaseItemQuantity'; payload: Product }
-  | { type: 'reset'; payload?: null };
+  | { type: 'reset'; payload?: undefined };
 
 const initialState: CartItem[] = [];
 
@@ -53,15 +57,17 @@ function reducer(
       if (!item) {
         throw new Error('No item sent to payload');
       }
+
       const isInCard = state.find((prod) => prod.item.name === item.name);
       if (isInCard) {
-        updateQuantity(state, item, 1);
+        return updateQuantity(state, item, 1);
       }
+
       return [...state, { item, quantity: 1 }];
     }
 
     case 'removeItem': {
-      return state.filter((product) => product.item.name != item!.name);
+      return removeFromCart(state, item);
     }
 
     case 'decreaseItemQuantity': {
