@@ -15,6 +15,24 @@ export type CartItem = {
 
 export type ChangeCartItemQuantityAction = 'increase' | 'decrease';
 
+function updateQuantity(
+  state: typeof initialState,
+  item: Product | null | undefined,
+  quantityModifier: number
+) {
+  const updatedState = state.map((cartItem) => {
+    if (cartItem.item.name === item!.name) {
+      return {
+        ...cartItem,
+        quantity: cartItem.quantity + quantityModifier,
+      };
+    }
+    return cartItem;
+  });
+
+  return updatedState;
+}
+
 type ActionType =
   | { type: 'addItem'; payload: Product }
   | { type: 'removeItem'; payload: Product }
@@ -37,17 +55,7 @@ function reducer(
       }
       const isInCard = state.find((prod) => prod.item.name === item.name);
       if (isInCard) {
-        const updatedState = state.map((cartItem) => {
-          if (cartItem.item.name === item!.name) {
-            return {
-              ...cartItem,
-              quantity: cartItem.quantity + 1,
-            };
-          }
-
-          return cartItem;
-        });
-        return updatedState;
+        updateQuantity(state, item, 1);
       }
       return [...state, { item, quantity: 1 }];
     }
@@ -57,31 +65,11 @@ function reducer(
     }
 
     case 'decreaseItemQuantity': {
-      const updatedState = state.map((cartItem) => {
-        if (cartItem.item.name === item!.name) {
-          return {
-            ...cartItem,
-            quantity: cartItem.quantity - 1,
-          };
-        }
-        return cartItem;
-      });
-
-      return updatedState;
+      return updateQuantity(state, item, -1);
     }
 
     case 'increaseItemQuantity': {
-      const updatedState = state.map((cartItem) => {
-        if (cartItem.item.name === item!.name) {
-          return {
-            ...cartItem,
-            quantity: cartItem.quantity + 1,
-          };
-        }
-
-        return cartItem;
-      });
-      return updatedState;
+      return updateQuantity(state, item, 1);
     }
 
     case 'reset': {
