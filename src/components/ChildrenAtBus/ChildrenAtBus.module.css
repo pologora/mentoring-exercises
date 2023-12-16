@@ -1,0 +1,28 @@
+.container {
+  border: 1px solid brown;
+  padding: 1rem;
+}
+
+.form {
+  width: 40%;
+  text-align: right;
+}
+
+.inputContainer {
+  margin-block: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.submitBtn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+.input {
+  margin-left: 1rem;
+}
+
+.name {
+  margin-right: 1rem;
+}

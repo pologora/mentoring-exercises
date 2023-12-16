@@ -8,6 +8,8 @@ import data from './components/recursiveComponent/data';
 import footerData from './data/footerData';
 import menuData from './data/menu';
 import Posts from './components/Posts/Posts';
+import ChildrenAtBus from './components/ChildrenAtBus/ChildrenAtBus';
+import Cart from './components/Cart/Cart';
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,6 +23,8 @@ function App() {
       <AsideMenu menuData={menuData} />
       <Wrapper />
       <Posts />
+      <ChildrenAtBus />
+      <Cart />
       <Footer footerData={footerData} />
     </>
   );
