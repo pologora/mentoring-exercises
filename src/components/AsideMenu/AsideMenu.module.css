@@ -4,7 +4,17 @@
 }
 
 .menuContainer {
-  border: 1px solid red;
-  height: 100px;
   padding: 1rem;
+}
+
+.linkContainer {
+  margin-bottom: 0.2rem;
+}
+
+.linkTitle {
+  margin-left: 0.5rem;
+}
+
+.linkTitle:hover {
+  border-bottom: 1px solid black;
 }

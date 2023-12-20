@@ -3,15 +3,24 @@ import {
   BsFillBagCheckFill,
   BsFillFileEarmarkRuledFill,
   BsFillHddRackFill,
+  BsCart3,
+  BsEmojiNeutralFill,
 } from 'react-icons/bs';
+import { FaHome, FaUserAstronaut } from 'react-icons/fa';
+import { MdChangeCircle } from 'react-icons/md';
 
-export type MenuDataProps={
+export type MenuDataProps = {
   linkName: string;
-  link:string;
-  icon: React.ReactNode
-}
+  link: string;
+  icon: React.ReactNode;
+};
 
 export const menuData = [
+  {
+    linkName: 'Home',
+    link: '/',
+    icon: <FaHome />,
+  },
   {
     linkName: 'Clients',
     link: '/clients',
@@ -23,7 +32,7 @@ export const menuData = [
     icon: <BsFillBagCheckFill />,
   },
   {
-    linkName: 'Facture',
+    linkName: 'Invoices',
     link: '/invoices',
     icon: <BsFillFileEarmarkRuledFill />,
   },
@@ -31,6 +40,26 @@ export const menuData = [
     linkName: 'Posts',
     link: '/posts',
     icon: <BsFillHddRackFill />,
+  },
+  {
+    linkName: 'Recursion',
+    link: '/recursion',
+    icon: <MdChangeCircle />,
+  },
+  {
+    linkName: 'Children at bus',
+    link: '/children',
+    icon: <BsEmojiNeutralFill />,
+  },
+  {
+    linkName: 'Cart',
+    link: '/cart',
+    icon: <BsCart3 />,
+  },
+  {
+    linkName: 'Users',
+    link: '/users',
+    icon: <FaUserAstronaut />,
   },
 ];
 export default menuData;

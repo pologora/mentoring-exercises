@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import type { MenuDataProps } from '../../data/menu';
 import style from './AsideMenu.module.css';
+import { Link } from 'react-router-dom';
 
 const AsideMenu = ({ menuData }: { menuData: MenuDataProps[] }) => {
   const [isOpen, setIsOpen] = useState(true);
   const menu = menuData.map((item) => (
-    <div key={item.link}>
-      <span>{item.icon}</span>
-      <a href={item.link}>{item.linkName}</a>
+    <div key={item.link} className={style.linkContainer}>
+      <span className={style.icon}>{item.icon}</span>
+      <Link className={style.linkTitle} to={item.link}>
+        {item.linkName}
+      </Link>
     </div>
   ));
 
