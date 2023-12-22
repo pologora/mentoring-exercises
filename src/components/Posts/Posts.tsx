@@ -10,17 +10,17 @@ interface IPost {
   userId: number;
 }
 
-interface PostApiResult {
-  data: IPost[] | null;
-  isLoading: boolean;
-  isError: boolean;
-}
+// interface PostApiResult {
+//   data: IPost[] | null;
+//   isLoading: boolean;
+//   isError: boolean;
+// }
 
 const POSTS_PER_PAGE = 4;
 const postsApiUrl = 'https://jsonplaceholder.typicode.com/posts';
 
 const Posts = () => {
-  const { data, isLoading, isError }: PostApiResult = useApi(postsApiUrl);
+  const { data, isLoading, isError } = useApi<IPost[]>(postsApiUrl);
   const [page, setPage] = useState(1);
 
   const pagesQuantity = data ? Math.ceil(data?.length / POSTS_PER_PAGE) : 0;

@@ -1,4 +1,7 @@
+import { useParams } from 'react-router-dom';
+
 const Order = () => {
-  return <div>Order</div>;
+  const { id } = useParams();
+  return <div>Order id: {id}</div>;
 };
 export default Order;

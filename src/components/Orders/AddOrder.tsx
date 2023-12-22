@@ -1,4 +1,12 @@
 const AddOrder = () => {
-  return <div>AddOrder</div>;
+  return (
+    <div>
+      <form>
+        <select name='' id=''></select>
+        <input type='text' />
+        <input type='text' />
+      </form>
+    </div>
+  );
 };
 export default AddOrder;

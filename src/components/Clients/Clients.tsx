@@ -1,11 +1,11 @@
-import { useOutletContext } from 'react-router-dom';
+import data from '../../data/multipleData';
+import ClientsList from './ClientsList';
 
 const Clients = () => {
-  const obj: { hi: string } = useOutletContext();
   return (
     <div>
       <h2>Clients</h2>
-      <h2>{obj.hi}</h2>
+      <ClientsList cardsData={data} />
     </div>
   );
 };

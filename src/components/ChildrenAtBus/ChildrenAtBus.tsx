@@ -52,8 +52,7 @@ const ChildrenAtBus = () => {
             className={style.input}
           />
         </div>
-        <input
-          type='submit'
+        <button
           value='Submit'
           onClick={handleAddChild}
           className={style.submitBtn}

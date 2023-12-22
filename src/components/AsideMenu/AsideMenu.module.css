@@ -14,7 +14,3 @@
 .linkTitle {
   margin-left: 0.5rem;
 }
-
-.linkTitle:hover {
-  border-bottom: 1px solid black;
-}

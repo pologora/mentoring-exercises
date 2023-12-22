@@ -1,2 +1,85 @@
-.clientContainer {
+.form {
+  margin: 1rem auto;
+  text-align: center;
+  width: 30%;
+}
+
+.inputContainer {
+  height: 3rem;
+}
+
+.input {
+  width: 100%;
+}
+
+.label {
+  display: block;
+  text-align: left;
+  text-transform: capitalize;
+  font-weight: bold;
+}
+
+.inputError {
+  color: red;
+  font-size: 0.8rem;
+  text-align: right;
+}
+
+.submit {
+  padding: 0.2rem 0.4rem;
+}
+
+.cardsList {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.propTitle {
+  text-transform: capitalize;
+}
+
+.propValue {
+  margin-left: 1rem;
+}
+
+.client {
+  border: 1px solid red;
+  padding: 1rem;
+  max-width: 600px;
+}
+
+.clientImg {
+  width: 20%;
+}
+
+.clientProps {
+  display: flex;
+  justify-content: space-between;
+}
+
+.actionBtnsContainer {
+  text-align: right;
+}
+
+.propsContainer {
+  margin-block: 1rem;
+}
+
+.goBackBtn {
+  display: flex;
+  justify-content: center;
+  gap: 0.3rem;
+  align-items: center;
+}
+
+.clientTitle {
+  text-align: center;
+}
+
+.clientsLayoutContainer {
+  margin: 1rem;
+}
+
+.addClientBtn {
 }

@@ -1,9 +1,0 @@
-.cardsList {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.searchContainer {
-  margin: 1rem;
-}

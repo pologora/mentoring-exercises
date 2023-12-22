@@ -1,9 +1,22 @@
-import cardsData from '../../data/multipleData';
-import Card from '../Card/Card';
-import style from './Wrapper.module.css';
+import Card from './Card';
+import style from './Clients.module.css';
 import { useState, ChangeEvent } from 'react';
 
-const Wrapper = () => {
+type ClientsListProps = {
+  cardsData: {
+    id: number;
+    imgSrc: string;
+    name: string;
+    surname: string;
+    street: string;
+    postCode: string;
+    town: string;
+    subRegion: string;
+    phoneNumber: string;
+  }[];
+};
+
+const ClientsList = ({ cardsData }: ClientsListProps) => {
   const [filter, setFilter] = useState('');
 
   const cardsElements = cardsData
@@ -14,7 +27,7 @@ const Wrapper = () => {
     const { value } = e.target;
     setFilter(value);
   };
-
+  // todo debounce
   return (
     <div>
       <div className={style.searchContainer}>
@@ -30,4 +43,4 @@ const Wrapper = () => {
     </div>
   );
 };
-export default Wrapper;
+export default ClientsList;

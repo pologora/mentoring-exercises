@@ -1,18 +1,15 @@
-import { Link, Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
+import style from './Clients.module.css';
 
 const ClientsLayout = () => {
+  const navigation = useNavigate();
   return (
-    <>
-      {' '}
-      <Link to='/clients/1'>Client 1</Link>
-      <br />
-      <Link to='/clients/2'>Clietn 2</Link>
-      <br />
-      <Link to='/clients/2/edit'>Edit Client 2</Link>
-      <br />
-      <Link to='/clients/add'>Add client</Link>
+    <div className={`${style.clientsLayoutContainer}`}>
+      <button onClick={() => navigation('/clients/add')} className={style.btn}>
+        Add client
+      </button>
       <Outlet context={{ hi: 'hello' }} />
-    </>
+    </div>
   );
 };
 export default ClientsLayout;

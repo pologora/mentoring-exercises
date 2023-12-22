@@ -1,7 +1,9 @@
+import { Link } from 'react-router-dom';
 import style from './card.module.css';
 
 type CardProps = {
   imgSrc: string;
+  id: number;
   name: string;
   surname: string;
   street: string;
@@ -19,10 +21,11 @@ const Card = ({
   street,
   subRegion,
   surname,
+  id,
   town,
 }: CardProps) => {
   return (
-    <div className={style.card}>
+    <Link to={`/clients/${id}`} className={style.card}>
       <div className={style.avatar}>
         <img src={imgSrc} alt='User avatar' className={style.avatarImg} />
       </div>
@@ -37,7 +40,7 @@ const Card = ({
         <p className='region'>{subRegion}</p>
         <p className='phone'>{phoneNumber}</p>
       </div>
-    </div>
+    </Link>
   );
 };
 export default Card;

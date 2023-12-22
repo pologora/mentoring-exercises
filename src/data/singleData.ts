@@ -8,6 +8,7 @@ export const singleData = {
   town: 'Town',
   subRegion: 'Region',
   phoneNumber: '+48 123 456 789',
+  id: 1,
 };
 
 export default singleData;
