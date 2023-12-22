@@ -8,6 +8,8 @@ import {
 } from 'react-icons/bs';
 import { FaHome, FaUserAstronaut } from 'react-icons/fa';
 import { MdChangeCircle } from 'react-icons/md';
+import { FiLogIn } from 'react-icons/fi';
+import { SiReadthedocs } from 'react-icons/si';
 
 export type MenuDataProps = {
   linkName: string;
@@ -60,6 +62,16 @@ export const menuData = [
     linkName: 'Users',
     link: '/users',
     icon: <FaUserAstronaut />,
+  },
+  {
+    linkName: 'Register',
+    link: '/register',
+    icon: <SiReadthedocs />,
+  },
+  {
+    linkName: 'Login',
+    link: '/login',
+    icon: <FiLogIn />,
   },
 ];
 export default menuData;
