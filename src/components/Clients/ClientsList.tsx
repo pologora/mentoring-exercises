@@ -1,19 +1,10 @@
 import Card from './Card';
 import style from './Clients.module.css';
 import { useState, ChangeEvent } from 'react';
+import type { TClient } from '../../types/customTypes';
 
 type ClientsListProps = {
-  cardsData: {
-    id: number;
-    imgSrc: string;
-    name: string;
-    surname: string;
-    street: string;
-    postCode: string;
-    town: string;
-    subRegion: string;
-    phoneNumber: string;
-  }[];
+  cardsData: TClient[];
 };
 
 const ClientsList = ({ cardsData }: ClientsListProps) => {

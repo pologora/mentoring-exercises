@@ -1,15 +1,15 @@
-import type { FormValues } from '../components/Clients/ClientManagement';
+import { TClient } from '../types/customTypes';
 
 export const formInputElements: {
-  title: keyof FormValues;
+  title: keyof TClient;
   required: boolean;
 }[] = [
   { title: 'name', required: true },
   { title: 'surname', required: true },
   { title: 'street', required: true },
-  { title: 'post', required: true },
-  { title: 'city', required: true },
-  { title: 'phone', required: true },
-  { title: 'region', required: false },
-  { title: 'img', required: false },
+  { title: 'postCode', required: true },
+  { title: 'town', required: true },
+  { title: 'phoneNumber', required: true },
+  { title: 'subRegion', required: false },
+  { title: 'imgSrc', required: false },
 ];

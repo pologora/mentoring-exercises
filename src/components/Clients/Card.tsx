@@ -2,14 +2,14 @@ import { Link } from 'react-router-dom';
 import style from './card.module.css';
 
 type CardProps = {
-  imgSrc: string;
-  id: number;
+  imgSrc?: string;
+  id?: number;
   name: string;
   surname: string;
   street: string;
   postCode: string;
   town: string;
-  subRegion: string;
+  subRegion?: string;
   phoneNumber: string;
 };
 
