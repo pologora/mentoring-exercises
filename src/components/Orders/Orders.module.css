@@ -23,3 +23,19 @@
   color: red;
   font-size: 0.8rem;
 }
+
+.orderListContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: space-between;
+}
+
+.orderCard {
+  padding: 0.5rem;
+}
+
+.orderCard:hover {
+  border: none;
+  background-color: aliceblue;
+}

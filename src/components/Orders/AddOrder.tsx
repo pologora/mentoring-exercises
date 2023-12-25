@@ -1,35 +1,39 @@
 import style from './Orders.module.css';
 import clientsData from '../../data/multipleData';
 import { useFormik } from 'formik';
-import * as yup from 'yup';
+import orderValidationSchema from '../../yupValidationScheemas/orderValidationScheema';
+import { createOrder } from '../../Api/resourceService';
+import { TOrder } from '../../types/customTypes';
 
-const addOrderValidationSchema = yup.object({
-  client: yup.string().required(),
-  quantity: yup.number().required().min(1).max(15),
-  title: yup.string().required().min(5),
-  content: yup.string().required().min(10),
-});
-
-type FormValues = yup.InferType<typeof addOrderValidationSchema>;
+const initialValues = {
+  client: '',
+  quantity: 0,
+  title: '',
+  content: '',
+};
 
 const AddOrder = () => {
-  const formik = useFormik<FormValues>({
-    initialValues: {
-      client: '',
-      quantity: 0,
-      title: '',
-      content: '',
-    },
-    validationSchema: addOrderValidationSchema,
-    onSubmit: (values: FormValues) => {
-      alert(JSON.stringify(values, null, 2));
+  const formik = useFormik<TOrder>({
+    initialValues: initialValues,
+    validationSchema: orderValidationSchema,
+    onSubmit: async (values: TOrder) => {
+      try {
+        await createOrder(values);
+        handleClearForm();
+      } catch (error) {
+        alert(error);
+      }
     },
   });
 
+  const handleClearForm = () => {
+    formik.setValues(initialValues);
+  };
+
   const clientsSelectOptions = clientsData.map((client) => (
     <option
-      key={client.phoneNumber}
-      value={client.phoneNumber}
+      key={client.id}
+      value={client.id}
     >{`${client.name} ${client.surname}`}</option>
   ));
 
@@ -90,7 +94,7 @@ const AddOrder = () => {
         </div>
         <div className={style.inputContainer}>
           <label className={style.label} htmlFor='content'>
-            Quantity
+            Content
           </label>
           <input
             className={style.input}

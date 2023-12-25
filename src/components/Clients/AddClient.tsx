@@ -3,7 +3,7 @@ import clientValidationScheema from '../../yupValidationScheemas/clientValidatio
 import style from './Clients.module.css';
 import { formInputElements } from '../../data/formInputs';
 import { TClient } from '../../types/customTypes';
-import { createClient } from '../../Api/clientsApi';
+import { createClient } from '../../Api/resourceService';
 
 const AddClient = () => {
   const formik = useFormik<TClient>({

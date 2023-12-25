@@ -11,8 +11,10 @@ type RecCompParams = {
 };
 
 function CommentItem({ username, comment, subComments }: Comment) {
+  const isLastElement = !subComments || subComments.length == 0;
+
   return (
-    <div key={comment}>
+    <div key={comment} className={isLastElement ? style.red : undefined}>
       <p>{username}</p>
       <p>{comment}</p>
       {subComments && <RecComp data={subComments} />}

@@ -7,9 +7,9 @@
       "surname": "Herbert",
       "street": "TestStreet",
       "postCode": "00-123",
-      "town": "Town",
+      "town": "Towns",
       "subRegion": "Region",
-      "phoneNumber": "+48 123 456 789"
+      "phoneNumber": "+48123456789"
     },
     {
       "id": 2,
@@ -20,8 +20,34 @@
       "postCode": "00-123",
       "town": "Town",
       "subRegion": "Region",
-      "phoneNumber": "+48 123 456 788"
+      "phoneNumber": "+48123456788"
+    },
+    {
+      "name": "Test ",
+      "surname": "Surname",
+      "street": "Streen",
+      "postCode": "00-000",
+      "town": "pruszcz",
+      "subRegion": "",
+      "imgSrc": "",
+      "phoneNumber": "+12346549870",
+      "id": 3
     }
   ],
-  "orders": []
+  "orders": [
+    {
+      "client": "1",
+      "quantity": 1,
+      "title": "Potatos",
+      "content": "get some potatos",
+      "id": 1
+    },
+    {
+      "client": "2",
+      "quantity": 2,
+      "title": "milka",
+      "content": "want some chekolade",
+      "id": 2
+    }
+  ]
 }

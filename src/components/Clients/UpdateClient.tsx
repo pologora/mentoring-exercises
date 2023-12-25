@@ -5,7 +5,7 @@ import { formInputElements } from '../../data/formInputs';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { TClient } from '../../types/customTypes';
-import { getClientByID, updateClient } from '../../Api/clientsApi';
+import { getClientByID, updateClient } from '../../Api/resourceService';
 
 const initialValues = {
   name: '',

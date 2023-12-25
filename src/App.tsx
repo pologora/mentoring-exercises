@@ -19,6 +19,7 @@ function App() {
   return (
     <>
       <AsideMenu menuData={menuData} />
+
       <Routes>
         <Route path='/' element={<Home />}></Route>
 
