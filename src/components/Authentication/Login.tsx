@@ -49,6 +49,7 @@ const Login = () => {
             type='password'
             name='password'
             id='password'
+            autoComplete='current-password'
             className={style.input}
             value={formik.values.password}
             onChange={formik.handleChange}
