@@ -20,6 +20,7 @@ import {
   QueryClient,
 } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import Debounce from './components/debounce/Debounce';
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache(),
@@ -38,7 +39,7 @@ function App() {
           <ReactQueryDevtools position='right' initialIsOpen={false} />
         )}
         <AsideMenu menuData={menuData} />
-
+        <Debounce />
         <Routes>
           <Route path='/' element={<Home />}></Route>
 
