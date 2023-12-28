@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import {
-  deleteOrder,
-  getClientByID,
-  getOrderByID,
-} from '../../Api/resourceService';
 import { TClient, TOrder } from '../../types/customTypes';
+import { deleteOrder, getOrderByID } from '../../Api/ordersService';
+import { getClientByID } from '../../Api/clientsService';
 
 const Order = () => {
   const { id } = useParams();

@@ -1,7 +1,7 @@
-import { TClient } from '../types/customTypes';
+import { ClientFormValues } from '../yupValidationScheemas/clientValidationScheema';
 
 export const formInputElements: {
-  title: keyof TClient;
+  title: keyof ClientFormValues;
   required: boolean;
 }[] = [
   { title: 'name', required: true },

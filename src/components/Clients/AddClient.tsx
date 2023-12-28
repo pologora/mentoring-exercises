@@ -1,12 +1,13 @@
 import { useFormik } from 'formik';
-import clientValidationScheema from '../../yupValidationScheemas/clientValidationScheema';
+import clientValidationScheema, {
+  ClientFormValues,
+} from '../../yupValidationScheemas/clientValidationScheema';
 import style from './Clients.module.css';
 import { formInputElements } from '../../data/formInputs';
-import { TClient } from '../../types/customTypes';
-import { createClient } from '../../Api/resourceService';
+import { createClient } from '../../Api/clientsService';
 
 const AddClient = () => {
-  const formik = useFormik<TClient>({
+  const formik = useFormik<ClientFormValues>({
     initialValues: {
       name: '',
       surname: '',
@@ -18,7 +19,7 @@ const AddClient = () => {
       phoneNumber: '',
     },
     validationSchema: clientValidationScheema,
-    onSubmit: (values: TClient) => {
+    onSubmit: (values: ClientFormValues) => {
       createClient(values);
     },
   });
@@ -53,4 +54,5 @@ const AddClient = () => {
     </div>
   );
 };
+
 export default AddClient;

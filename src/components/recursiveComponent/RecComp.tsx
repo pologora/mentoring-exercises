@@ -8,6 +8,7 @@ type Comment = {
 
 type RecCompParams = {
   data: Comment[];
+  // level
 };
 
 function CommentItem({ username, comment, subComments }: Comment) {

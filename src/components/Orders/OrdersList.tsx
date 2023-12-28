@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { getAllOrders } from '../../Api/resourceService';
 import { TOrder } from '../../types/customTypes';
 import style from './Orders.module.css';
 import OrderCard from './OrderCard';
+import { getAllOrders } from '../../Api/ordersService';
 
 const OrdersList = () => {
   const [orders, setOrders] = useState<TOrder[]>([]);
@@ -35,7 +35,9 @@ const OrdersList = () => {
     return <div>{error}</div>;
   }
 
-  const renderedOrdersList = orders.map((order) => <OrderCard order={order} />);
+  const renderedOrdersList = orders.map((order) => (
+    <OrderCard order={order} key={order.content} />
+  ));
 
   return <div className={style.orderListContainer}>{renderedOrdersList}</div>;
 };

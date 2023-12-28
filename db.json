@@ -21,33 +21,15 @@
       "town": "Town",
       "subRegion": "Region",
       "phoneNumber": "+48123456788"
-    },
-    {
-      "name": "Test ",
-      "surname": "Surname",
-      "street": "Streen",
-      "postCode": "00-000",
-      "town": "pruszcz",
-      "subRegion": "",
-      "imgSrc": "",
-      "phoneNumber": "+12346549870",
-      "id": 3
     }
   ],
   "orders": [
     {
       "client": "1",
       "quantity": 1,
-      "title": "Potatos",
-      "content": "get some potatos",
+      "title": "asdfasdf",
+      "content": "asdfadfadsf",
       "id": 1
-    },
-    {
-      "client": "2",
-      "quantity": 5,
-      "title": "banana",
-      "content": "banana from africa",
-      "id": 2
     }
   ]
 }

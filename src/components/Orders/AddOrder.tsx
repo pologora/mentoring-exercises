@@ -1,9 +1,10 @@
 import style from './Orders.module.css';
 import clientsData from '../../data/multipleData';
 import { useFormik } from 'formik';
-import orderValidationSchema from '../../yupValidationScheemas/orderValidationScheema';
-import { createOrder } from '../../Api/resourceService';
-import { TOrder } from '../../types/customTypes';
+import orderValidationSchema, {
+  OrderFormValues,
+} from '../../yupValidationScheemas/orderValidationScheema';
+import { createOrder } from '../../Api/ordersService';
 
 const initialValues = {
   client: '',
@@ -13,10 +14,10 @@ const initialValues = {
 };
 
 const AddOrder = () => {
-  const formik = useFormik<TOrder>({
+  const formik = useFormik<OrderFormValues>({
     initialValues: initialValues,
     validationSchema: orderValidationSchema,
-    onSubmit: async (values: TOrder) => {
+    onSubmit: async (values: OrderFormValues) => {
       try {
         await createOrder(values);
         handleClearForm();
@@ -27,7 +28,7 @@ const AddOrder = () => {
   });
 
   const handleClearForm = () => {
-    formik.setValues(initialValues);
+    formik.resetForm();
   };
 
   const clientsSelectOptions = clientsData.map((client) => (

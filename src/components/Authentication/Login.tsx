@@ -1,16 +1,11 @@
 import { useFormik } from 'formik';
-import * as yup from 'yup';
 import style from './Auth.module.css';
-
-const loginValidationScheema = yup.object({
-  login: yup.string().required(),
-  password: yup.string().required(),
-});
-
-type FormValues = yup.InferType<typeof loginValidationScheema>;
+import loginValidationScheema, {
+  LoginValues,
+} from '../../yupValidationScheemas/loginValidationSchema';
 
 const Login = () => {
-  const formik = useFormik<FormValues>({
+  const formik = useFormik<LoginValues>({
     initialValues: {
       login: '',
       password: '',
@@ -20,6 +15,7 @@ const Login = () => {
       alert(JSON.stringify(values, null, 2));
     },
   });
+
   return (
     <div>
       <form onSubmit={formik.handleSubmit} className={style.form}>

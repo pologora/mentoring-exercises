@@ -14,26 +14,46 @@ import ClientsRoutes from './components/Clients/ClientsRoutes';
 import OrdersRoutes from './components/Orders/OrdersRoutes';
 import Register from './components/Authentication/Register';
 import Login from './components/Authentication/Login';
+import {
+  QueryClientProvider,
+  QueryCache,
+  QueryClient,
+} from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+const queryClient = new QueryClient({
+  queryCache: new QueryCache(),
+  defaultOptions: {
+    queries: {
+      gcTime: 60_000,
+    },
+  },
+});
 
 function App() {
   return (
     <>
-      <AsideMenu menuData={menuData} />
+      <QueryClientProvider client={queryClient}>
+        {process.env.NODE_ENV === 'development' && (
+          <ReactQueryDevtools position='right' initialIsOpen={false} />
+        )}
+        <AsideMenu menuData={menuData} />
 
-      <Routes>
-        <Route path='/' element={<Home />}></Route>
+        <Routes>
+          <Route path='/' element={<Home />}></Route>
 
-        <Route path='/clients/*' element={<ClientsRoutes />} />
-        <Route path='/orders/*' element={<OrdersRoutes />} />
+          <Route path='/clients/*' element={<ClientsRoutes />} />
+          <Route path='/orders/*' element={<OrdersRoutes />} />
 
-        <Route path='/recursion' element={<RecComp data={data} />}></Route>
-        <Route path='/children' element={<ChildrenAtBus />}></Route>
-        <Route path='/posts' element={<Posts />}></Route>
-        <Route path='/register' element={<Register />}></Route>
-        <Route path='/login' element={<Login />}></Route>
-        <Route path='*' element={<NotFound />}></Route>
-      </Routes>
-      <Footer footerData={footerData} />
+          <Route path='/recursion' element={<RecComp data={data} />}></Route>
+          <Route path='/children' element={<ChildrenAtBus />}></Route>
+          <Route path='/posts' element={<Posts />}></Route>
+          <Route path='/register' element={<Register />}></Route>
+          <Route path='/login' element={<Login />}></Route>
+          <Route path='*' element={<NotFound />}></Route>
+        </Routes>
+        <Footer footerData={footerData} />
+      </QueryClientProvider>
     </>
   );
 }

@@ -5,7 +5,7 @@ import { formInputElements } from '../../data/formInputs';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { TClient } from '../../types/customTypes';
-import { getClientByID, updateClient } from '../../Api/resourceService';
+import { getClientByID, updateClient } from '../../Api/clientsService';
 
 const initialValues = {
   name: '',
@@ -28,7 +28,7 @@ const UpdateClient = () => {
   const getClient = async (id: string) => {
     setIsLoading(true);
     try {
-      const { data }: { data: TClient } = await getClientByID(id);
+      const { data } = await getClientByID(id);
       formik.setValues(data);
     } catch (error) {
       setError('Cant get client data');
@@ -40,6 +40,7 @@ const UpdateClient = () => {
   const formik = useFormik<TClient>({
     initialValues: initialValues,
     validationSchema: clientValidationScheema,
+    // enableReinitialize: true,
     onSubmit: (values: TClient) => {
       if (id) {
         updateClient(values, id);

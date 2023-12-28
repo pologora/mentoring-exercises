@@ -1,22 +1,11 @@
 import { useFormik } from 'formik';
-import * as yup from 'yup';
 import style from './Auth.module.css';
-
-const registerValidationScheema = yup.object({
-  name: yup.string().required(),
-  username: yup.string().required(),
-  password: yup.string().required().min(8),
-  passwordConfirm: yup
-    .string()
-    .required()
-    .min(8)
-    .oneOf([yup.ref('password')], 'Passwords must much'),
-});
-
-type FormValues = yup.InferType<typeof registerValidationScheema>;
+import registerValidationScheema, {
+  RegisterFormValues,
+} from '../../yupValidationScheemas/registerValidationScheema';
 
 const Register = () => {
-  const formik = useFormik<FormValues>({
+  const formik = useFormik<RegisterFormValues>({
     initialValues: {
       name: '',
       username: '',

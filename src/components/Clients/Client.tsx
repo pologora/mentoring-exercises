@@ -2,8 +2,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import style from './Clients.module.css';
 import { IoMdArrowBack } from 'react-icons/io';
 import { TClient } from '../../types/customTypes';
-import { deleteClient, getClientByID } from '../../Api/resourceService';
 import { useEffect, useState } from 'react';
+import { deleteClient, getClientByID } from '../../Api/clientsService';
 
 const Client = () => {
   const { id } = useParams();

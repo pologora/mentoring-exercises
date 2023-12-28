@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-export default yup.object({
+const schema = yup.object({
   name: yup.string().required(),
   surname: yup
     .string()
@@ -13,7 +13,7 @@ export default yup.object({
     .required(),
   town: yup.string().min(5).required(),
   subRegion: yup.string(),
-  imgSrc: yup.string(),
+  imgSrc: yup.string().url(),
   phoneNumber: yup
     .string()
     .required()
@@ -22,3 +22,7 @@ export default yup.object({
       'Phone phone must match the following: +12345678900'
     ),
 });
+
+export type ClientFormValues = yup.InferType<typeof schema>;
+
+export default schema;

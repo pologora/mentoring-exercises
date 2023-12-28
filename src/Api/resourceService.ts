@@ -1,16 +1,17 @@
 import axios, { AxiosError } from 'axios';
-import { TClient, TOrder } from '../types/customTypes';
+
+const baseURL = 'http://localhost:3000';
 
 const defaultUrls = {
-  clients: 'http://localhost:3000/clients',
-  orders: 'http://localhost:3000/orders',
+  clients: '/clients',
+  orders: '/orders',
 };
 
 type ResourseType = 'clients' | 'orders';
 
-const createResource = async <T>(data: T, resourse: ResourseType) => {
+export const createResource = async <T>(data: T, resourse: ResourseType) => {
   try {
-    axios.defaults.baseURL = defaultUrls[resourse];
+    axios.defaults.baseURL = baseURL + defaultUrls[resourse];
     const res = await axios.post('/', data);
     return res;
   } catch (error: unknown) {
@@ -23,9 +24,9 @@ const createResource = async <T>(data: T, resourse: ResourseType) => {
   }
 };
 
-const deleteResource = async (id: string, resourse: ResourseType) => {
+export const deleteResource = async (id: string, resourse: ResourseType) => {
   try {
-    axios.defaults.baseURL = defaultUrls[resourse];
+    axios.defaults.baseURL = baseURL + defaultUrls[resourse];
     const res = await axios.delete(`/${id}`);
     return res;
   } catch (error: unknown) {
@@ -38,10 +39,13 @@ const deleteResource = async (id: string, resourse: ResourseType) => {
   }
 };
 
-const getResourceById = async (id: string, resourse: ResourseType) => {
+export const getResourceById = async <T>(
+  id: string,
+  resourse: ResourseType
+) => {
   try {
-    axios.defaults.baseURL = defaultUrls[resourse];
-    const res = await axios.get(`/${id}`);
+    axios.defaults.baseURL = baseURL + defaultUrls[resourse];
+    const res = await axios.get<T>(`/${id}`);
     return res;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
@@ -53,13 +57,13 @@ const getResourceById = async (id: string, resourse: ResourseType) => {
   }
 };
 
-const updateResource = async <T>(
+export const updateResource = async <T>(
   data: T,
   id: string,
   resourse: ResourseType
 ) => {
   try {
-    axios.defaults.baseURL = defaultUrls[resourse];
+    axios.defaults.baseURL = baseURL + defaultUrls[resourse];
     const res = await axios.patch(`/${id}`, data);
     return res;
   } catch (error: unknown) {
@@ -72,10 +76,10 @@ const updateResource = async <T>(
   }
 };
 
-const getAllResource = async (resourse: ResourseType) => {
+export const getAllResource = async <T>(resourse: ResourseType) => {
   try {
-    axios.defaults.baseURL = defaultUrls[resourse];
-    const res = await axios.get(`/`);
+    axios.defaults.baseURL = baseURL + defaultUrls[resourse];
+    const res = await axios.get<T>(`/`);
     return res;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
@@ -85,37 +89,6 @@ const getAllResource = async (resourse: ResourseType) => {
     }
     throw error;
   }
-};
-
-export const createClient = (data: TClient) => {
-  return createResource(data, 'clients');
-};
-export const createOrder = (data: TOrder) => {
-  return createResource(data, 'orders');
-};
-export const deleteClient = (id: string) => {
-  return deleteResource(id, 'clients');
-};
-export const deleteOrder = (id: string) => {
-  return deleteResource(id, 'orders');
-};
-export const getClientByID = (id: string) => {
-  return getResourceById(id, 'clients');
-};
-export const getOrderByID = (id: string) => {
-  return getResourceById(id, 'orders');
-};
-export const updateClient = (data: TClient, id: string) => {
-  return updateResource(data, id, 'clients');
-};
-export const updateOrder = (data: TOrder, id: string) => {
-  return updateResource(data, id, 'orders');
-};
-export const getAllClients = () => {
-  return getAllResource('clients');
-};
-export const getAllOrders = () => {
-  return getAllResource('orders');
 };
 
 function handleAxiosError(error: AxiosError): void {
