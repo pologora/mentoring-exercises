@@ -18,7 +18,7 @@
       "surname": "Sienkiewicz",
       "street": "TestStreet",
       "postCode": "00-123",
-      "town": "Town",
+      "town": "Townsssa",
       "subRegion": "Region",
       "phoneNumber": "+48123456788"
     }
@@ -30,6 +30,20 @@
       "title": "asdfasdf",
       "content": "asdfadfadsf",
       "id": 1
+    },
+    {
+      "client": "1",
+      "quantity": 5,
+      "title": "adsfadf",
+      "content": "afasdf asdfadf",
+      "id": 2
+    },
+    {
+      "client": "1",
+      "quantity": 2,
+      "title": "asfafff",
+      "content": "a a a a a a a a ",
+      "id": 3
     }
   ]
 }

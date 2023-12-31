@@ -16,8 +16,8 @@ import Register from './components/Authentication/Register';
 import Login from './components/Authentication/Login';
 import {
   QueryClientProvider,
-  QueryCache,
   QueryClient,
+  QueryCache,
 } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Debounce from './components/debounce/Debounce';
@@ -26,7 +26,7 @@ const queryClient = new QueryClient({
   queryCache: new QueryCache(),
   defaultOptions: {
     queries: {
-      gcTime: 60_000,
+      gcTime: 60000,
     },
   },
 });
@@ -36,7 +36,10 @@ function App() {
     <>
       <QueryClientProvider client={queryClient}>
         {process.env.NODE_ENV === 'development' && (
-          <ReactQueryDevtools position='right' initialIsOpen={false} />
+          <ReactQueryDevtools
+            buttonPosition='top-right'
+            initialIsOpen={false}
+          />
         )}
         <AsideMenu menuData={menuData} />
         <Debounce />
@@ -53,6 +56,7 @@ function App() {
           <Route path='/login' element={<Login />}></Route>
           <Route path='*' element={<NotFound />}></Route>
         </Routes>
+
         <Footer footerData={footerData} />
       </QueryClientProvider>
     </>

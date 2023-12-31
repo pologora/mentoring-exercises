@@ -3,9 +3,10 @@ import clientValidationScheema from '../../yupValidationScheemas/clientValidatio
 import style from './Clients.module.css';
 import { formInputElements } from '../../data/formInputs';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { TClient } from '../../types/customTypes';
+import { useEffect } from 'react';
 import { getClientByID, updateClient } from '../../Api/clientsService';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { TClient } from '../../types/customTypes';
 
 const initialValues = {
   name: '',
@@ -16,41 +17,56 @@ const initialValues = {
   subRegion: '',
   imgSrc: '',
   phoneNumber: '',
+  id: '',
 };
 
 const UpdateClient = () => {
-  const [error, setError] = useState<string>('');
-  const [isLoading, setIsLoading] = useState(false);
-
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const getClient = async (id: string) => {
-    setIsLoading(true);
-    try {
-      const { data } = await getClientByID(id);
-      formik.setValues(data);
-    } catch (error) {
-      setError('Cant get client data');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const formik = useFormik<TClient>({
-    initialValues: initialValues,
-    validationSchema: clientValidationScheema,
-    // enableReinitialize: true,
-    onSubmit: (values: TClient) => {
+  const { isError, isLoading, data, error } = useQuery({
+    queryKey: ['client', id],
+    queryFn: () => {
       if (id) {
-        updateClient(values, id);
+        return getClientByID(id);
       }
     },
   });
 
-  useEffect(() => {
+  const formik = useFormik<TClient>({
+    initialValues: initialValues,
+    validationSchema: clientValidationScheema,
+    onSubmit: (values: TClient) => {
+      if (id) {
+        handleUpdate(values);
+      }
+    },
+  });
+
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: (values: TClient) => {
+      return updateClient(values, values.id.toString());
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['clients'] });
+      navigate('/clients');
+    },
+    onError: () => {
+      console.log('Cos poszlo nie tak');
+    },
+  });
+
+  const handleUpdate = (values: TClient) => {
     if (id) {
-      getClient(id);
+      mutation.mutate(values);
+    }
+  };
+
+  useEffect(() => {
+    if (data) {
+      formik.setValues(data.data);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
@@ -59,8 +75,8 @@ const UpdateClient = () => {
     return <div>Loading...</div>;
   }
 
-  if (error) {
-    return <div>{error}</div>;
+  if (isError) {
+    return <div>{error.message}</div>;
   }
 
   const renderedFormElements = formInputElements.map(({ title, required }) => {
@@ -70,6 +86,7 @@ const UpdateClient = () => {
           {`${title} ${required ? '*' : ''}`}
         </label>
         <input
+          id={title}
           className={style.input}
           name={title}
           onChange={formik.handleChange}

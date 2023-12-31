@@ -1,10 +1,11 @@
 import style from './Orders.module.css';
-import clientsData from '../../data/multipleData';
 import { useFormik } from 'formik';
 import orderValidationSchema, {
   OrderFormValues,
 } from '../../yupValidationScheemas/orderValidationScheema';
 import { createOrder } from '../../Api/ordersService';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { getAllClients } from '../../Api/clientsService';
 
 const initialValues = {
   client: '',
@@ -18,20 +19,39 @@ const AddOrder = () => {
     initialValues: initialValues,
     validationSchema: orderValidationSchema,
     onSubmit: async (values: OrderFormValues) => {
-      try {
-        await createOrder(values);
-        handleClearForm();
-      } catch (error) {
-        alert(error);
-      }
+      handleAddOrder(values);
+      handleClearForm();
     },
   });
+
+  const { isError, isLoading, data, error } = useQuery({
+    queryKey: ['clients'],
+    queryFn: getAllClients,
+  });
+
+  const orderMutation = useMutation({
+    mutationFn: (values: OrderFormValues) => {
+      return createOrder(values);
+    },
+  });
+
+  const handleAddOrder = (values: OrderFormValues) => {
+    orderMutation.mutate(values);
+  };
 
   const handleClearForm = () => {
     formik.resetForm();
   };
 
-  const clientsSelectOptions = clientsData.map((client) => (
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>{error.message}</div>;
+  }
+
+  const clientsSelectOptions = data?.data.map((client) => (
     <option
       key={client.id}
       value={client.id}

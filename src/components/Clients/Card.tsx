@@ -3,7 +3,7 @@ import style from './card.module.css';
 
 type CardProps = {
   imgSrc?: string;
-  id?: number;
+  id?: string;
   name: string;
   surname: string;
   street: string;

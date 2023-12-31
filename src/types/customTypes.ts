@@ -1,5 +1,5 @@
 export type TClient = {
-  id?: number;
+  id: string;
   imgSrc?: string;
   name: string;
   surname: string;

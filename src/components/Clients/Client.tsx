@@ -1,47 +1,38 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import style from './Clients.module.css';
 import { IoMdArrowBack } from 'react-icons/io';
-import { TClient } from '../../types/customTypes';
-import { useEffect, useState } from 'react';
 import { deleteClient, getClientByID } from '../../Api/clientsService';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 const Client = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState<TClient | null>(null);
-  const [error, setError] = useState<string>('');
+  const queryClient = useQueryClient();
 
-  const handleGetClient = async (id: string) => {
-    try {
-      setIsLoading(true);
-      const { data }: { data: TClient } = await getClientByID(id);
-      setData(data);
-    } catch (error) {
-      setError('Cant get client data, try again later');
-    } finally {
-      setIsLoading(false);
-    }
+  const { isLoading, isError, error, data } = useQuery({
+    queryKey: ['client', id],
+    queryFn: () => {
+      if (id) return handleGetClientById(id);
+    },
+  });
+
+  const deleteClientMutaion = useMutation({
+    mutationFn: (id: string) => {
+      return deleteClient(id);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['clients'] });
+      navigate('/clients');
+    },
+  });
+
+  const handleGetClientById = (id: string) => {
+    return getClientByID(id);
   };
 
   const handleDeleteClient = async (id: string) => {
-    try {
-      setIsLoading(true);
-      const result = await deleteClient(id);
-      console.log(result);
-      navigate('/clients');
-    } catch (error) {
-      setError('Error when trying to delete Client');
-    } finally {
-      setIsLoading(false);
-    }
+    deleteClientMutaion.mutate(id);
   };
-
-  useEffect(() => {
-    if (id) {
-      handleGetClient(id);
-    }
-  }, [id]);
 
   if (!id) {
     return <div>Cant find id: {id}</div>;
@@ -51,15 +42,15 @@ const Client = () => {
     return <div>Loading...</div>;
   }
 
-  if (error) {
-    return <div>{error}</div>;
+  if (isError) {
+    return <div>{error.message}</div>;
   }
 
   if (!data) {
     return <div>Cant find any data</div>;
   }
 
-  const clientDataElements = Object.entries(data).map(([key, value]) => {
+  const clientDataElements = Object.entries(data.data).map(([key, value]) => {
     if (key === 'imgSrc') {
       return null;
     }
@@ -82,7 +73,7 @@ const Client = () => {
         Back
       </button>
       <h3 className={style.clientTitle}>Client</h3>
-      <img src={data.imgSrc} alt='client' className={style.clientImg} />
+      <img src={data.data.imgSrc} alt='client' className={style.clientImg} />
       <div className={style.propsContainer}>{clientDataElements}</div>
       <div className={style.actionBtnsContainer}>
         <button

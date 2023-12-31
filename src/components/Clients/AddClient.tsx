@@ -5,6 +5,8 @@ import clientValidationScheema, {
 import style from './Clients.module.css';
 import { formInputElements } from '../../data/formInputs';
 import { createClient } from '../../Api/clientsService';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+// import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const AddClient = () => {
   const formik = useFormik<ClientFormValues>({
@@ -20,9 +22,27 @@ const AddClient = () => {
     },
     validationSchema: clientValidationScheema,
     onSubmit: (values: ClientFormValues) => {
-      createClient(values);
+      handleAdd(values);
     },
   });
+
+  const queryClient = useQueryClient();
+
+  const clientMutation = useMutation({
+    mutationFn: (values: ClientFormValues) => {
+      return createClient(values);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['clients'] });
+    },
+    onError: () => {
+      console.log('Cos poszlo nie tak');
+    },
+  });
+
+  const handleAdd = (values: ClientFormValues) => {
+    clientMutation.mutate(values);
+  };
 
   const renderedFormElements = formInputElements.map(({ title, required }) => {
     return (

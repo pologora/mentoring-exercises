@@ -1,4 +1,5 @@
 import { TClient } from '../types/customTypes';
+import { ClientFormValues } from '../yupValidationScheemas/clientValidationScheema';
 import {
   createResource,
   deleteResource,
@@ -7,7 +8,7 @@ import {
   updateResource,
 } from './resourceService';
 
-export const createClient = (data: TClient) => {
+export const createClient = (data: ClientFormValues) => {
   return createResource(data, 'clients');
 };
 
