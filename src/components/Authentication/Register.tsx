@@ -3,8 +3,15 @@ import style from './Auth.module.css';
 import registerValidationScheema, {
   RegisterFormValues,
 } from '../../yupValidationScheemas/registerValidationScheema';
+import { createUser } from '../../Api/userApi';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useUserContext } from '../../contexts/UserContext';
 
 const Register = () => {
+  const { user } = useUserContext();
+  const navigate = useNavigate();
+
   const formik = useFormik<RegisterFormValues>({
     initialValues: {
       name: '',
@@ -13,10 +20,24 @@ const Register = () => {
       passwordConfirm: '',
     },
     validationSchema: registerValidationScheema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values: RegisterFormValues) => {
+      const data = {
+        name: values.name,
+        username: values.username,
+        password: values.password,
+      };
+
+      await createUser(data);
+      navigate('/login');
     },
   });
+
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
+
   return (
     <div>
       <form onSubmit={formik.handleSubmit} className={style.form}>

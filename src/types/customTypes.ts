@@ -17,3 +17,10 @@ export type TOrder = {
   content: string;
   id?: number;
 };
+
+export type TUser = {
+  name: string;
+  username: string;
+  password: string;
+  id: string;
+};

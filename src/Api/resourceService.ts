@@ -5,9 +5,10 @@ const baseURL = 'http://localhost:3000';
 const defaultUrls = {
   clients: '/clients',
   orders: '/orders',
+  users: '/users',
 };
 
-type ResourseType = 'clients' | 'orders';
+type ResourseType = 'clients' | 'orders' | 'users';
 
 export const createResource = async <T>(data: T, resourse: ResourseType) => {
   try {
@@ -91,7 +92,7 @@ export const getAllResource = async <T>(resourse: ResourseType) => {
   }
 };
 
-function handleAxiosError(error: AxiosError): void {
+export function handleAxiosError(error: AxiosError): void {
   if (error.response) {
     // Handle response error
     console.log(error.response.data);

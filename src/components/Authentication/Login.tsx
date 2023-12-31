@@ -3,37 +3,50 @@ import style from './Auth.module.css';
 import loginValidationScheema, {
   LoginValues,
 } from '../../yupValidationScheemas/loginValidationSchema';
+import { useUserContext } from '../../contexts/UserContext';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const Login = () => {
+  const { user, logIn, isLoading, error } = useUserContext();
+  const navigate = useNavigate();
+
   const formik = useFormik<LoginValues>({
     initialValues: {
-      login: '',
+      username: '',
       password: '',
     },
     validationSchema: loginValidationScheema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: (values: LoginValues) => {
+      logIn(values);
     },
   });
+
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
 
   return (
     <div>
       <form onSubmit={formik.handleSubmit} className={style.form}>
         <div className={style.inputContainer}>
-          <label htmlFor='login' className={style.label}>
-            Login
+          <label htmlFor='username' className={style.label}>
+            Username
           </label>
           <input
             type='text'
-            name='login'
-            id='login'
+            name='username'
+            id='username'
             className={style.input}
-            value={formik.values.login}
+            value={formik.values.username}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            autoComplete='username'
           />
           <p className={style.inputError}>
-            {formik.touched.login && formik.errors.login}
+            {formik.touched.username && formik.errors.username}
           </p>
         </div>
 
@@ -55,7 +68,10 @@ const Login = () => {
         <p className={style.inputError}>
           {formik.touched.password && formik.errors.password}
         </p>
-        <button type='submit'>Submit</button>
+        {error && <p className={style.inputError}>{error}</p>}
+        <button type='submit' disabled={isLoading}>
+          Submit
+        </button>
       </form>
     </div>
   );

@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import type { MenuDataProps } from '../../data/menu';
+import { menuData } from '../../data/menu';
 import style from './AsideMenu.module.css';
 import { Link } from 'react-router-dom';
 
-const AsideMenu = ({ menuData }: { menuData: MenuDataProps[] }) => {
+const AsideMenu = () => {
   const [isOpen, setIsOpen] = useState(true);
   const menu = menuData.map((item) => (
     <div key={item.link} className={style.linkContainer}>

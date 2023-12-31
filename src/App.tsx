@@ -1,11 +1,11 @@
+import { Suspense, lazy } from 'react';
 import './App.css';
 import AsideMenu from './components/AsideMenu/AsideMenu';
 import Footer from './components/Footer/Footer';
 import RecComp from './components/recursiveComponent/RecComp';
 import data from './components/recursiveComponent/data';
 import footerData from './data/footerData';
-import menuData from './data/menu';
-import Posts from './components/Posts/Posts';
+const Posts = lazy(() => import('./components/Posts/Posts'));
 import ChildrenAtBus from './components/ChildrenAtBus/ChildrenAtBus';
 import { Route, Routes } from 'react-router-dom';
 import Home from './components/Home/Home';
@@ -19,8 +19,13 @@ import {
   QueryClient,
   QueryCache,
 } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import Debounce from './components/debounce/Debounce';
+// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import Header from './components/Header/Header';
+import Invoices from './components/Invoices/Invoices';
+import ProtectedWrapper from './components/ProtectedWrapper/ProtectedWrapper';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
+import Loading from './components/Loading/Loading';
+import GlobalContextProvider from './components/GlobalContextsProvider/GlobalContextProvider';
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache(),
@@ -34,31 +39,53 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        {process.env.NODE_ENV === 'development' && (
+      <ErrorBoundary>
+        <QueryClientProvider client={queryClient}>
+          {/* {process.env.NODE_ENV === 'development' && (
           <ReactQueryDevtools
-            buttonPosition='top-right'
-            initialIsOpen={false}
+          buttonPosition='top-right'
+          initialIsOpen={false}
           />
-        )}
-        <AsideMenu menuData={menuData} />
-        <Debounce />
-        <Routes>
-          <Route path='/' element={<Home />}></Route>
+        )} */}
+          <GlobalContextProvider>
+            <Header />
+            <AsideMenu />
+            <Routes>
+              <Route path='/' element={<Home />}></Route>
 
-          <Route path='/clients/*' element={<ClientsRoutes />} />
-          <Route path='/orders/*' element={<OrdersRoutes />} />
+              <Route path='/clients/*' element={<ClientsRoutes />} />
+              <Route path='/orders/*' element={<OrdersRoutes />} />
 
-          <Route path='/recursion' element={<RecComp data={data} />}></Route>
-          <Route path='/children' element={<ChildrenAtBus />}></Route>
-          <Route path='/posts' element={<Posts />}></Route>
-          <Route path='/register' element={<Register />}></Route>
-          <Route path='/login' element={<Login />}></Route>
-          <Route path='*' element={<NotFound />}></Route>
-        </Routes>
+              <Route
+                path='/invoices'
+                element={
+                  <ProtectedWrapper redirectPath='/login'>
+                    <Invoices />
+                  </ProtectedWrapper>
+                }
+              />
+              <Route
+                path='/recursion'
+                element={<RecComp data={data} />}
+              ></Route>
+              <Route path='/children' element={<ChildrenAtBus />}></Route>
+              <Route
+                path='/posts'
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <Posts />
+                  </Suspense>
+                }
+              ></Route>
+              <Route path='/register' element={<Register />}></Route>
+              <Route path='/login' element={<Login />}></Route>
+              <Route path='*' element={<NotFound />}></Route>
+            </Routes>
 
-        <Footer footerData={footerData} />
-      </QueryClientProvider>
+            <Footer footerData={footerData} />
+          </GlobalContextProvider>
+        </QueryClientProvider>
+      </ErrorBoundary>
     </>
   );
 }

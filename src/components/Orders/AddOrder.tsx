@@ -6,6 +6,9 @@ import orderValidationSchema, {
 import { createOrder } from '../../Api/ordersService';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { getAllClients } from '../../Api/clientsService';
+import NotificationAlert from '../NotificationAlert/NotificationAlert';
+import { useNotificationContext } from '../../contexts/NotificationContext';
+import { NotificationBgColor } from '../../enums/NotificationBgColor';
 
 const initialValues = {
   client: '',
@@ -15,6 +18,7 @@ const initialValues = {
 };
 
 const AddOrder = () => {
+  const { handleChangeNotification } = useNotificationContext();
   const formik = useFormik<OrderFormValues>({
     initialValues: initialValues,
     validationSchema: orderValidationSchema,
@@ -32,6 +36,18 @@ const AddOrder = () => {
   const orderMutation = useMutation({
     mutationFn: (values: OrderFormValues) => {
       return createOrder(values);
+    },
+    onSuccess: () => {
+      handleChangeNotification(
+        'Order successfully created',
+        NotificationBgColor.success
+      );
+    },
+    onError: () => {
+      handleChangeNotification(
+        'Unexpected error uccurred',
+        NotificationBgColor.error
+      );
     },
   });
 
@@ -60,6 +76,7 @@ const AddOrder = () => {
 
   return (
     <div className={style.addOrderContainer}>
+      <NotificationAlert />
       <form className={style.form} onSubmit={formik.handleSubmit}>
         <div className={style.inputContainer}>
           <label htmlFor='client' className={style.label}>
