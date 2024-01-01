@@ -3,9 +3,11 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { TClient, TOrder } from '../../types/customTypes';
 import { deleteOrder, getOrderByID } from '../../Api/ordersService';
 import { getClientByID } from '../../Api/clientsService';
+import ConfirmAlert from '../ConfirmAlert/ConfirmAlert';
 
 const Order = () => {
   const { id } = useParams();
+  const [confirmAlertIsOpen, setConfirmAlertIsOpen] = useState(false);
   const [order, setOrder] = useState<TOrder | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -66,6 +68,14 @@ const Order = () => {
     }
   };
 
+  const handleCloseConfirmAlert = () => {
+    setConfirmAlertIsOpen(false);
+  };
+
+  const handleOpenCofirmAlert = () => {
+    setConfirmAlertIsOpen(true);
+  };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -76,12 +86,18 @@ const Order = () => {
 
   return (
     <div>
+      <ConfirmAlert
+        open={confirmAlertIsOpen}
+        title='Do you want to delete order?'
+        handleClose={handleCloseConfirmAlert}
+        confirmedAction={handleDeleteOrder}
+      />
       <Link
         to={`/clients/${client?.id}`}
       >{`${client?.name} ${client?.surname}`}</Link>
       <br />
       {JSON.stringify(order)}
-      <button disabled={isLoading} onClick={handleDeleteOrder}>
+      <button disabled={isLoading} onClick={handleOpenCofirmAlert}>
         Delete order
       </button>
     </div>

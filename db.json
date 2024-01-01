@@ -26,13 +26,6 @@
   "orders": [
     {
       "client": "1",
-      "quantity": 1,
-      "title": "asdfasdf",
-      "content": "asdfadfadsf",
-      "id": 1
-    },
-    {
-      "client": "1",
       "quantity": 5,
       "title": "adsfadf",
       "content": "afasdf asdfadf",
@@ -65,13 +58,6 @@
       "title": "asdfasdf",
       "content": "asdfasdfasdf",
       "id": 6
-    },
-    {
-      "client": "2",
-      "quantity": 2,
-      "title": "asdfasdf",
-      "content": "asdfasdfadf",
-      "id": 7
     }
   ],
   "users": [

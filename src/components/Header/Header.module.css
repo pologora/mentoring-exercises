@@ -4,11 +4,19 @@
   display: flex;
   justify-content: space-between;
   padding: 1rem;
+  background-color: var(--backgroundColor);
+  color: var(--textColor);
 }
 
 .avatarContainer {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.actionButtons {
+  display: flex;
   align-items: center;
   gap: 1rem;
 }

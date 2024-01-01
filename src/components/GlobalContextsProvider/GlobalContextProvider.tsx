@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { UserContextProvider } from '../../contexts/UserContext';
 import NotificationContextProvider from '../../contexts/NotificationContext';
+import ThemeContextProvider from '../../contexts/ThemeContext';
 
 type GlobalContextProviderProps = {
   children: ReactNode;
@@ -9,7 +10,9 @@ type GlobalContextProviderProps = {
 const GlobalContextProvider = ({ children }: GlobalContextProviderProps) => {
   return (
     <UserContextProvider>
-      <NotificationContextProvider>{children}</NotificationContextProvider>
+      <NotificationContextProvider>
+        <ThemeContextProvider>{children}</ThemeContextProvider>
+      </NotificationContextProvider>
     </UserContextProvider>
   );
 };

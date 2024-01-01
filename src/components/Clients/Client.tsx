@@ -3,11 +3,14 @@ import style from './Clients.module.css';
 import { IoMdArrowBack } from 'react-icons/io';
 import { deleteClient, getClientByID } from '../../Api/clientsService';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
+import ConfirmAlert from '../ConfirmAlert/ConfirmAlert';
 
 const Client = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const [confirmAlertIsOpen, setConfirmAlertIsOpen] = useState(false);
 
   const { isLoading, isError, error, data } = useQuery({
     queryKey: ['client', id],
@@ -16,8 +19,9 @@ const Client = () => {
     },
   });
 
-  const deleteClientMutaion = useMutation({
-    mutationFn: (id: string) => {
+  const deleteClientMutation = useMutation({
+    mutationFn: () => {
+      if (!id) throw new Error('No id');
       return deleteClient(id);
     },
     onSuccess: () => {
@@ -30,13 +34,17 @@ const Client = () => {
     return getClientByID(id);
   };
 
-  const handleDeleteClient = async (id: string) => {
-    deleteClientMutaion.mutate(id);
+  const handleDeleteClient = async () => {
+    deleteClientMutation.mutate();
   };
 
-  if (!id) {
-    return <div>Cant find id: {id}</div>;
-  }
+  const handleOpenCofirmAlert = () => {
+    setConfirmAlertIsOpen(true);
+  };
+
+  const handleCloseConfirmAlert = () => {
+    setConfirmAlertIsOpen(false);
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -65,6 +73,12 @@ const Client = () => {
 
   return (
     <div className={style.client}>
+      <ConfirmAlert
+        open={confirmAlertIsOpen}
+        confirmedAction={handleDeleteClient}
+        handleClose={handleCloseConfirmAlert}
+        title='You are about to delete the client. This action cannot be undone.'
+      />
       <button
         className={`${style.goBackBtn} ${style.btn}`}
         onClick={() => navigate(-1)}
@@ -76,10 +90,7 @@ const Client = () => {
       <img src={data.data.imgSrc} alt='client' className={style.clientImg} />
       <div className={style.propsContainer}>{clientDataElements}</div>
       <div className={style.actionBtnsContainer}>
-        <button
-          className={style.deleteBtn}
-          onClick={() => handleDeleteClient(id)}
-        >
+        <button className={style.deleteBtn} onClick={handleOpenCofirmAlert}>
           Delete
         </button>
         <button
