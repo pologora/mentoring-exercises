@@ -16,6 +16,7 @@ export type TOrder = {
   title: string;
   content: string;
   id?: number;
+  paid: boolean;
 };
 
 export type TUser = {

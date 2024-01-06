@@ -5,23 +5,7 @@
 .addOrderContainer {
   margin: 2rem;
   max-width: 300px;
-}
-
-.inputContainer {
-  height: 3rem;
-}
-
-.input {
-  width: 100%;
-}
-
-.label {
-  text-align: left;
-}
-
-.inputError {
-  color: red;
-  font-size: 0.8rem;
+  margin-inline: auto;
 }
 
 .orderListContainer {

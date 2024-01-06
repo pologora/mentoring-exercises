@@ -1,0 +1,23 @@
+.inputContainer {
+  height: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.inputError {
+  color: red;
+  font-size: 0.8rem;
+}
+
+.label {
+  text-align: left;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.label::after {
+  content: ':';
+}
+
+.input {
+  width: 100%;
+}

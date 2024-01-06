@@ -6,6 +6,15 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import ConfirmAlert from '../ConfirmAlert/ConfirmAlert';
 
+// const useDeleteClientMutation = (id: string, onSuccess?:()=>void,onError:()=>void)=> useMutation({
+//     mutationFn: () => {
+//       if (!id) throw new Error('No id');
+//       return deleteClient(id);
+//     },
+//     onSuccess: onSucces,
+//     onError: onError
+//   });
+
 const Client = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -27,6 +36,9 @@ const Client = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['clients'] });
       navigate('/clients');
+    },
+    onError: () => {
+      // notify("Nie udalo się usunac klienta")
     },
   });
 

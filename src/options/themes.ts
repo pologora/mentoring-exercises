@@ -1,6 +1,10 @@
+const colors = {
+  primaryGreen: '#1ca086',
+};
+
 const themes = {
   dark: {
-    primary: '#1ca086',
+    primary: colors.primaryGreen,
     separatorColor: 'rgba(255,255,255,0.20)',
     textColor: 'white',
     backgroundColor: '#121212',

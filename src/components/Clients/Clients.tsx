@@ -4,11 +4,18 @@ import style from './Clients.module.css';
 import { getAllClients } from '../../Api/clientsService';
 import { useQuery } from '@tanstack/react-query';
 
-const Clients = () => {
-  const { isError, error, isLoading, data } = useQuery({
+//constants.ts
+// const QUERY_KEYS={clients: "clients"}
+//api
+const useGetAllClients = () => {
+  return useQuery({
     queryKey: ['clients'],
     queryFn: getAllClients,
   });
+};
+
+const Clients = () => {
+  const { isError, error, isLoading, data } = useGetAllClients();
 
   const navigate = useNavigate();
 

@@ -9,6 +9,7 @@ const OrderCard = ({ order }: { order: TOrder }) => {
       <p>Quantity: {order.quantity}</p>
       <p>Title: {order.title}</p>
       <p>Content: {order.content}</p>
+      <p>Opłacone: {order.paid ? 'Tak' : 'Nie'}</p>
     </Link>
   );
 };

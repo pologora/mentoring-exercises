@@ -1,11 +1,6 @@
-import {
-  ReactNode,
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { ReactNode, createContext, useEffect, useState } from 'react';
 import { NotificationBgColor } from '../enums/NotificationBgColor';
+import { getSafeContext } from './helpers';
 
 type TNotification = {
   text: string;
@@ -76,14 +71,19 @@ const NotificationContextProvider = ({
 };
 export default NotificationContextProvider;
 
-export const useNotificationContext = () => {
-  const context = useContext(NotificationContext);
+// eslint-disable-next-line react-refresh/only-export-components
+export const useNotificationContext = getSafeContext(
+  NotificationContext,
+  'NotificationContext'
+);
+// export const useNotificationContext = () => {
+//   const context = useContext(NotificationContext);
 
-  if (!context) {
-    throw new Error(
-      'Missing notification context, it is not wrapped in NotificationContext!'
-    );
-  }
+//   if (!context) {
+//     throw new Error(
+//       'Missing notification context, it is not wrapped in NotificationContext!'
+//     );
+//   }
 
-  return context;
-};
+//   return context;
+// };

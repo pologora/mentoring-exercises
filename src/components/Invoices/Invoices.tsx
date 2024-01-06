@@ -1,4 +1,10 @@
+import MultiStepForm from '../MultiStepForm/MultiStepForm';
+
 const Invoices = () => {
-  return <div>Invoices</div>;
+  return (
+    <div>
+      <MultiStepForm />
+    </div>
+  );
 };
 export default Invoices;

@@ -5,11 +5,28 @@ import loginValidationScheema, {
 } from '../../yupValidationScheemas/loginValidationSchema';
 import { useUserContext } from '../../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { getUserByUsername } from '../../Api/userApi';
 
 const Login = () => {
-  const { user, logIn, isLoading, error } = useUserContext();
+  const { user, logIn: saveUser } = useUserContext();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const logIn = async (data: LoginValues) => {
+    try {
+      setIsLoading(true);
+      const result = await getUserByUsername(data);
+      saveUser(result);
+    } catch (error) {
+      console.log(error);
+      saveUser(null);
+      setError('Wrong name or password');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const formik = useFormik<LoginValues>({
     initialValues: {

@@ -37,7 +37,6 @@ export const getAllUsers = () => {
 export const getUserByUsername = async (data: LoginValues): Promise<TUser> => {
   try {
     const res = await axios.get<TUser[]>(`/?username=${data.username}`);
-    console.log(res);
 
     const isValid = isValidPassword(data.password, res.data[0].password);
     if (isValid) {
