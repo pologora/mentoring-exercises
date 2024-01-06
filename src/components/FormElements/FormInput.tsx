@@ -14,9 +14,7 @@ const FormInput = ({ label, ...props }: FormInputProps) => {
         {label}
       </label>
       <input className={style.input} {...field} {...(props as any)} />
-      {meta.touched && meta.error ? (
-        <p className={style.inputError}>{meta.error}</p>
-      ) : null}
+      {meta.touched && meta.error ? <p className={style.inputError}>{meta.error}</p> : null}
     </div>
   );
 };

@@ -9,10 +9,7 @@ const MultiStepForm = () => {
 
   return (
     <div className={style.multiStepContainer}>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={invoiceValidationScheema}
-      ></Formik>
+      <Formik initialValues={initialValues} validationSchema={invoiceValidationScheema}></Formik>
     </div>
   );
 };
