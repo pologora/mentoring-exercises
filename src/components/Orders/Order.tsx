@@ -1,8 +1,15 @@
+import { Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { TClient, TOrder } from '../../types/customTypes';
-import { deleteOrder, getOrderByID } from '../../Api/ordersService';
+
 import { getClientByID } from '../../Api/clientsService';
+import {
+  deleteOrder,
+  getOrderByID,
+  markOrderAsPaided,
+  markOrderAsUnpaided,
+} from '../../Api/ordersService';
+import { TClient, TOrder } from '../../types/customTypes';
 import ConfirmAlert from '../ConfirmAlert/ConfirmAlert';
 
 const Order = () => {
@@ -61,7 +68,7 @@ const Order = () => {
       navigate('/orders');
     } catch (error) {
       setError(
-        'An unexpected error uccurred while trying to delete an order. Please try again later'
+        'An unexpected error uccurred while trying to delete an order. Please try again later',
       );
     } finally {
       setIsLoading(false);
@@ -84,22 +91,40 @@ const Order = () => {
     return <div>{error}</div>;
   }
 
+  const handleMakePaided = async () => {
+    if (order?.id) {
+      const id = order?.id.toString();
+      await markOrderAsPaided(id);
+    }
+  };
+
+  const handleMakeUnpaid = async () => {
+    if (order?.id) {
+      const id = order?.id.toString();
+      await markOrderAsUnpaided(id);
+    }
+  };
+
   return (
     <div>
       <ConfirmAlert
+        confirmedAction={handleDeleteOrder}
+        handleClose={handleCloseConfirmAlert}
         open={confirmAlertIsOpen}
         title='Do you want to delete order?'
-        handleClose={handleCloseConfirmAlert}
-        confirmedAction={handleDeleteOrder}
       />
-      <Link
-        to={`/clients/${client?.id}`}
-      >{`${client?.name} ${client?.surname}`}</Link>
+      <Link to={`/clients/${client?.id}`}>{`${client?.name} ${client?.surname}`}</Link>
       <br />
       {JSON.stringify(order)}
-      <button disabled={isLoading} onClick={handleOpenCofirmAlert}>
+      <Button disabled={isLoading} variant='contained' onClick={handleOpenCofirmAlert}>
         Delete order
-      </button>
+      </Button>
+      <Button variant='outlined' onClick={handleMakePaided}>
+        change order to paided
+      </Button>
+      <Button variant='outlined' onClick={handleMakeUnpaid}>
+        change order to unpaided
+      </Button>
     </div>
   );
 };

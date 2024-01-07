@@ -46,3 +46,8 @@ export const markOrderAsPaided = (id: string) => {
   const data = { paid: true };
   return updateResource(data, id, 'orders');
 };
+
+export const markOrderAsUnpaided = (id: string) => {
+  const data = { paid: false };
+  return updateResource(data, id, 'orders');
+};

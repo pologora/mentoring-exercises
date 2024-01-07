@@ -1,10 +1,13 @@
 import { useMutation } from '@tanstack/react-query';
+import { AxiosResponse } from 'axios';
 import { FormikHelpers } from 'formik';
 import { useNavigate } from 'react-router-dom';
 
 import { createInvoice } from '../../Api/invoicesService';
+import { markOrderAsPaided } from '../../Api/ordersService';
 import { useNotificationContext } from '../../contexts/NotificationContext';
 import { NotificationBgColor } from '../../enums/NotificationBgColor';
+import { TInvoice } from '../../types/customTypes';
 import {
   step1Schema,
   step2Schema,
@@ -32,7 +35,11 @@ const MultistepWrapper = () => {
         NotificationBgColor.error,
       );
     },
-    onSuccess: () => {
+    onSuccess: (values: AxiosResponse<TInvoice>) => {
+      values.data.orders.forEach(async (order) => {
+        await markOrderAsPaided(order.id);
+      });
+
       handleChangeNotification('Faktura została dodana', NotificationBgColor.success);
       navigate('/invoices');
     },

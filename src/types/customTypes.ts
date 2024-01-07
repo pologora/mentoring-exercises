@@ -15,7 +15,7 @@ export type TOrder = {
   quantity: number;
   title: string;
   content: string;
-  id?: number;
+  id: string;
   paid: boolean;
 };
 

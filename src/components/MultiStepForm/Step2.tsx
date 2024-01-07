@@ -8,6 +8,7 @@ import OrdersList from './OrdersList';
 const Step2 = ({ label }: FormikStepProps) => {
   const { isValid, values } = useFormikContext<MultiFormValuesType>();
   const { data, error, isError, isLoading } = useGetAllOrdersByClient(values.client.id);
+  const unpaidOrders = data?.data.filter((order) => !order.paid) || [];
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -20,7 +21,7 @@ const Step2 = ({ label }: FormikStepProps) => {
   return (
     <div>
       <h2>{label}</h2>
-      {data?.data && <OrdersList orders={data?.data} />}
+      {data?.data && <OrdersList orders={unpaidOrders} />}
       {!isValid ? <p className='error'>Choose order</p> : null}
     </div>
   );

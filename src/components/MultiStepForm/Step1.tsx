@@ -27,7 +27,7 @@ const Step1 = ({ label }: FormikStepProps) => {
     if (client) {
       setValues((prev) => ({ ...prev, client }));
     }
-  }, [clientId]);
+  }, [clientId, client, setValues]);
 
   if (isLoading) {
     return <div>Loading...</div>;
