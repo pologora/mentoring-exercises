@@ -1,21 +1,11 @@
-import ClientsList from './ClientsList';
 import { useNavigate } from 'react-router-dom';
-import style from './Clients.module.css';
-import { getAllClients } from '../../Api/clientsService';
-import { useQuery } from '@tanstack/react-query';
 
-//constants.ts
-// const QUERY_KEYS={clients: "clients"}
-//api
-const useGetAllClients = () => {
-  return useQuery({
-    queryKey: ['clients'],
-    queryFn: getAllClients,
-  });
-};
+import { useGetAllClients } from '../../Api/clientsService';
+import style from './Clients.module.css';
+import ClientsList from './ClientsList';
 
 const Clients = () => {
-  const { isError, error, isLoading, data } = useGetAllClients();
+  const { data, error, isError, isLoading } = useGetAllClients();
 
   const navigate = useNavigate();
 
@@ -30,7 +20,7 @@ const Clients = () => {
   return (
     <div>
       <h2>Clients</h2>
-      <button onClick={() => navigate('/clients/add')} className={style.btn}>
+      <button className={style.btn} onClick={() => navigate('/clients/add')}>
         Add client
       </button>
       {data && <ClientsList cardsData={data.data} />}

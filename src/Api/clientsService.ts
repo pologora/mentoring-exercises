@@ -1,3 +1,6 @@
+import { useQuery } from '@tanstack/react-query';
+
+import { QUERY_KEYS } from '../constants/constants';
 import { TClient } from '../types/customTypes';
 import { ClientFormValues } from '../yupValidationScheemas/clientValidationScheema';
 import {
@@ -26,4 +29,11 @@ export const updateClient = (data: TClient, id: string) => {
 
 export const getAllClients = () => {
   return getAllResource<TClient[]>('clients');
+};
+
+export const useGetAllClients = () => {
+  return useQuery({
+    queryFn: getAllClients,
+    queryKey: QUERY_KEYS.clients,
+  });
 };

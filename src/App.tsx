@@ -14,18 +14,15 @@ import ClientsRoutes from './components/Clients/ClientsRoutes';
 import OrdersRoutes from './components/Orders/OrdersRoutes';
 import Register from './components/Authentication/Register';
 import Login from './components/Authentication/Login';
-import {
-  QueryClientProvider,
-  QueryClient,
-  QueryCache,
-} from '@tanstack/react-query';
+import { QueryClientProvider, QueryClient, QueryCache } from '@tanstack/react-query';
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Header from './components/Header/Header';
-import Invoices from './components/Invoices/Invoices';
 import ProtectedWrapper from './components/ProtectedWrapper/ProtectedWrapper';
 import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 import Loading from './components/Loading/Loading';
 import GlobalContextProvider from './components/GlobalContextsProvider/GlobalContextProvider';
+import AddInvoice from './components/Invoices/AddInvoice';
+import InvoicesRoutes from './components/Invoices/InvoicesRoutes';
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache(),
@@ -57,17 +54,16 @@ function App() {
               <Route path='/orders/*' element={<OrdersRoutes />} />
 
               <Route
-                path='/invoices'
+                path='/invoices/*'
                 element={
-                  <ProtectedWrapper redirectPath='/login'>
-                    <Invoices />
-                  </ProtectedWrapper>
+                  <InvoicesRoutes />
+                  // <ProtectedWrapper redirectPath='/login'>
+                  // </ProtectedWrapper>
                 }
               />
-              <Route
-                path='/recursion'
-                element={<RecComp data={data} />}
-              ></Route>
+              <Route path='/invoices/add' element={<AddInvoice />} />
+
+              <Route path='/recursion' element={<RecComp data={data} />}></Route>
               <Route path='/children' element={<ChildrenAtBus />}></Route>
               <Route
                 path='/posts'

@@ -1,4 +1,28 @@
-const Step2 = () => {
-  return <div>Step2</div>;
+import { useFormikContext } from 'formik';
+
+import { useGetAllOrdersByClient } from '../../Api/ordersService';
+import { FormikStepProps } from '../../types/customInterfaces';
+import { MultiFormValuesType } from './MultiFormInitialValues';
+import OrdersList from './OrdersList';
+
+const Step2 = ({ label }: FormikStepProps) => {
+  const { isValid, values } = useFormikContext<MultiFormValuesType>();
+  const { data, error, isError, isLoading } = useGetAllOrdersByClient(values.client.id);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>{error.message}</div>;
+  }
+
+  return (
+    <div>
+      <h2>{label}</h2>
+      {data?.data && <OrdersList orders={data?.data} />}
+      {!isValid ? <p className='error'>Choose order</p> : null}
+    </div>
+  );
 };
 export default Step2;

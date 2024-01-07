@@ -55,6 +55,30 @@
       "content": "asdfdasdfaaa",
       "paid": false,
       "id": 4
+    },
+    {
+      "client": 1,
+      "quantity": 3,
+      "title": "asdfasdf",
+      "content": "asdfadfadsf",
+      "paid": false,
+      "id": 5
+    },
+    {
+      "client": 1,
+      "quantity": 6,
+      "title": "asdfadfafd",
+      "content": "adsfasdfasdf",
+      "paid": false,
+      "id": 6
+    },
+    {
+      "client": 1,
+      "quantity": 3,
+      "title": "asdfasdf",
+      "content": "adfadsfaaa",
+      "paid": false,
+      "id": 7
     }
   ],
   "users": [
@@ -75,6 +99,70 @@
       "username": "username3",
       "password": "12345678",
       "id": 3
+    }
+  ],
+  "invoices": [
+    {
+      "client": {
+        "id": 2,
+        "imgSrc": "https://images.unsplash.com/photo-1661869535393-872dea2d9f8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
+        "name": "Henryk",
+        "surname": "Sienkiewicz",
+        "street": "TestStreet",
+        "postCode": "00-123",
+        "town": "Townsssa",
+        "subRegion": "Region",
+        "phoneNumber": "+48123456788"
+      },
+      "date": "2024-01-07T17:29:30.745Z",
+      "month": "August",
+      "orders": [
+        {
+          "client": "2",
+          "quantity": 2,
+          "title": "asdfasdfas",
+          "content": "dfasfdadsfadf",
+          "paid": false,
+          "id": 2
+        }
+      ],
+      "price": "5555",
+      "id": 1
+    },
+    {
+      "client": {
+        "id": 1,
+        "imgSrc": "https://images.unsplash.com/photo-1661869535393-872dea2d9f8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
+        "name": "Zbigniew",
+        "surname": "Herbert",
+        "street": "TestStreet",
+        "postCode": "00-123",
+        "town": "Towns",
+        "subRegion": "Region",
+        "phoneNumber": "+48123456789"
+      },
+      "date": "2024-01-07T19:13:28.084Z",
+      "month": "September",
+      "orders": [
+        {
+          "client": 1,
+          "quantity": 3,
+          "title": "asdfasdf",
+          "content": "adfadsfaaa",
+          "paid": false,
+          "id": 7
+        },
+        {
+          "client": 1,
+          "quantity": 3,
+          "title": "asdfasdf",
+          "content": "asdfadfadsf",
+          "paid": false,
+          "id": 5
+        }
+      ],
+      "price": "5000",
+      "id": 2
     }
   ]
 }

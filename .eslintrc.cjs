@@ -1,47 +1,50 @@
+/* eslint-disable sort-keys */
+// eslint-disable-next-line no-undef
 module.exports = {
   env: {
     browser: true,
     es2021: true,
+    jest: true,
   },
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
-    'prettier',
-    'plugin:simple-import-sort',
+    // // 'prettier',
+    // 'plugin:simple-import-sort',
   ],
-  overrides: [
-    // override "simple-import-sort" config
-    {
-      files: ['*.js', '*.jsx', '*.ts', '*.tsx'],
-      rules: {
-        'simple-import-sort/imports': [
-          'error',
-          {
-            groups: [
-              // Packages `react` related packages come first.
-              ['^react', '^@?\\w'],
-              // Internal packages.
-              ['^(@|components)(/.*|$)'],
-              // Side effect imports.
-              ['^\\u0000'],
-              // Parent imports. Put `..` last.
-              ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
-              // Other relative imports. Put same-folder imports and `.` last.
-              ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],
-              // Style imports.
-              ['^.+\\.?(css)$'],
-            ],
-          },
-        ],
-      },
-    },
-  ],
+  // overrides: [
+  //   // override "simple-import-sort" config
+  //   {
+  //     files: ['*.js', '*.jsx', '*.ts', '*.tsx'],
+  //     rules: {
+  //       'simple-import-sort/imports': [
+  //         'error',
+  //         {
+  //           groups: [
+  //             // Packages `react` related packages come first.
+  //             ['^react', '^@?\\w'],
+  //             // Internal packages.
+  //             ['^(@|components)(/.*|$)'],
+  //             // Side effect imports.
+  //             ['^\\u0000'],
+  //             // Parent imports. Put `..` last.
+  //             ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
+  //             // Other relative imports. Put same-folder imports and `.` last.
+  //             ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],
+  //             // Style imports.
+  //             ['^.+\\.?(css)$'],
+  //           ],
+  //         },
+  //       ],
+  //     },
+  //   },
+  // ],
   parserOptions: {
     ecmaVersion: 'latest',
-    sourceType: 'module',
     project: ['./tsconfig.json'],
+    sourceType: 'module',
   },
   plugins: [
     'react',
@@ -73,15 +76,11 @@ module.exports = {
         varsIgnorePattern: '^_',
       },
     ],
-    'multiline-ternary': 'error',
+    // 'multiline-ternary': 'error',
     'no-unused-vars': 'error',
     'no-use-before-define': 'error',
     'no-magic-numbers': 'error',
-    'sort-keys': [
-      'error',
-      'asc',
-      { caseSensitive: false, natural: true, minKeys: 2 },
-    ],
+    'sort-keys': ['error', 'asc', { caseSensitive: false, natural: true, minKeys: 2 }],
     'sort-vars': ['error', { ignoreCase: true }],
     'react/jsx-sort-props': [
       'error',
@@ -95,12 +94,12 @@ module.exports = {
         locale: 'auto',
       },
     ],
-    'sort-destructure-keys/sort-destructure-keys': [
-      'error',
-      { caseSensitive: false },
-    ],
+    'sort-destructure-keys/sort-destructure-keys': ['error', { caseSensitive: false }],
     'no-multiple-empty-lines': ['error', { max: 2, maxBOF: 0, maxEOF: 1 }],
   },
+  // rules: {
+  //   'no-console': 'error',
+  // },
   settings: {
     react: {
       version: 'detect',

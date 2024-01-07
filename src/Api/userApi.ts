@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import { TUser } from '../types/customTypes';
 import { LoginValues } from '../yupValidationScheemas/loginValidationSchema';
 import { RegisterFormValues } from '../yupValidationScheemas/registerValidationScheema';
@@ -9,8 +11,6 @@ import {
   handleAxiosError,
   updateResource,
 } from './resourceService';
-
-import axios from 'axios';
 
 axios.defaults.baseURL = 'http://localhost:3000/users';
 
@@ -34,13 +34,17 @@ export const getAllUsers = () => {
   return getAllResource<TUser[]>('users');
 };
 
+function isValidPassword(givenPass: string, savedPass: string) {
+  return givenPass === savedPass;
+}
 export const getUserByUsername = async (data: LoginValues): Promise<TUser> => {
   try {
     const res = await axios.get<TUser[]>(`/?username=${data.username}`);
 
-    const isValid = isValidPassword(data.password, res.data[0].password);
+    const firstIndexInArray = 0;
+    const isValid = isValidPassword(data.password, res.data[firstIndexInArray].password);
     if (isValid) {
-      return res.data[0];
+      return res.data[firstIndexInArray];
     } else {
       throw new Error('Wrong password or username');
     }
@@ -48,12 +52,9 @@ export const getUserByUsername = async (data: LoginValues): Promise<TUser> => {
     if (axios.isAxiosError(error)) {
       handleAxiosError(error);
     } else {
+      // eslint-disable-next-line no-console
       console.log('Unknown error:', error);
     }
     throw error;
   }
 };
-
-function isValidPassword(givenPass: string, savedPass: string) {
-  return givenPass === savedPass;
-}

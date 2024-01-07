@@ -4,13 +4,14 @@ import orderValidationSchema, {
   OrderFormValues,
 } from '../../yupValidationScheemas/orderValidationScheema';
 import { createOrder } from '../../Api/ordersService';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { getAllClients } from '../../Api/clientsService';
+import { useMutation } from '@tanstack/react-query';
+import { useGetAllClients } from '../../Api/clientsService';
 import NotificationAlert from '../NotificationAlert/NotificationAlert';
 import { useNotificationContext } from '../../contexts/NotificationContext';
 import { NotificationBgColor } from '../../enums/NotificationBgColor';
 import FormInput from '../FormElements/FormInput';
 import FormSelect from '../FormElements/FormSelect';
+import { MenuItem } from '@mui/material';
 
 const initialValues = {
   client: '',
@@ -23,26 +24,17 @@ const initialValues = {
 const AddOrder = () => {
   const { handleChangeNotification } = useNotificationContext();
 
-  const { isError, isLoading, data, error } = useQuery({
-    queryKey: ['clients'],
-    queryFn: getAllClients,
-  });
+  const { isError, isLoading, data, error } = useGetAllClients();
 
   const orderMutation = useMutation({
     mutationFn: (values: OrderFormValues) => {
       return createOrder(values);
     },
     onSuccess: () => {
-      handleChangeNotification(
-        'Order successfully created',
-        NotificationBgColor.success
-      );
+      handleChangeNotification('Order successfully created', NotificationBgColor.success);
     },
     onError: () => {
-      handleChangeNotification(
-        'Unexpected error uccurred',
-        NotificationBgColor.error
-      );
+      handleChangeNotification('Unexpected error uccurred', NotificationBgColor.error);
     },
   });
 
@@ -59,10 +51,7 @@ const AddOrder = () => {
   }
 
   const clientsSelectOptions = data?.data.map((client) => (
-    <option
-      key={client.id}
-      value={client.id}
-    >{`${client.name} ${client.surname}`}</option>
+    <MenuItem key={client.id} value={client.id}>{`${client.name} ${client.surname}`}</MenuItem>
   ));
 
   return (
@@ -78,15 +67,9 @@ const AddOrder = () => {
       >
         <Form className={style.form}>
           <FormSelect label='Wybierz klienta' name='client' id='client'>
-            <option value=''></option>
             {clientsSelectOptions}
           </FormSelect>
-          <FormInput
-            label='Quantity'
-            name='quantity'
-            id='quantity'
-            type='number'
-          />
+          <FormInput label='Quantity' name='quantity' id='quantity' type='number' />
           <FormInput label='Title' name='title' id='title' />
           <FormInput label='Content' name='content' id='content' />
           <button type='submit'>Add Order</button>

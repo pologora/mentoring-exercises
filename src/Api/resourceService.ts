@@ -1,14 +1,17 @@
+/* eslint-disable no-console */
+/* eslint-disable no-use-before-define */
 import axios, { AxiosError } from 'axios';
 
 const baseURL = 'http://localhost:3000';
 
 const defaultUrls = {
   clients: '/clients',
+  invoices: '/invoices',
   orders: '/orders',
   users: '/users',
 };
 
-type ResourseType = 'clients' | 'orders' | 'users';
+type ResourseType = 'clients' | 'orders' | 'users' | 'invoices';
 
 export const createResource = async <T>(data: T, resourse: ResourseType) => {
   try {
@@ -40,10 +43,7 @@ export const deleteResource = async (id: string, resourse: ResourseType) => {
   }
 };
 
-export const getResourceById = async <T>(
-  id: string,
-  resourse: ResourseType
-) => {
+export const getResourceById = async <T>(id: string, resourse: ResourseType) => {
   try {
     axios.defaults.baseURL = baseURL + defaultUrls[resourse];
     const res = await axios.get<T>(`/${id}`);
@@ -58,11 +58,7 @@ export const getResourceById = async <T>(
   }
 };
 
-export const updateResource = async <T>(
-  data: T,
-  id: string,
-  resourse: ResourseType
-) => {
+export const updateResource = async <T>(data: T, id: string, resourse: ResourseType) => {
   try {
     axios.defaults.baseURL = baseURL + defaultUrls[resourse];
     const res = await axios.patch(`/${id}`, data);
@@ -77,10 +73,12 @@ export const updateResource = async <T>(
   }
 };
 
-export const getAllResource = async <T>(resourse: ResourseType) => {
+export const getAllResource = async <T>(resourse: ResourseType, filter = '') => {
   try {
-    axios.defaults.baseURL = baseURL + defaultUrls[resourse];
-    const res = await axios.get<T>(`/`);
+    axios.defaults.baseURL = baseURL + defaultUrls[resourse] + filter;
+    console.log(axios.defaults.baseURL);
+
+    const res = await axios.get<T>('');
     return res;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {

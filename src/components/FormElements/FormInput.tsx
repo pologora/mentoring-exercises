@@ -1,5 +1,5 @@
 import { FieldAttributes, useField } from 'formik';
-import style from './FormStyle.module.css';
+import { Box, TextField } from '@mui/material';
 
 type FormInputProps = {
   label: string;
@@ -9,13 +9,18 @@ const FormInput = ({ label, ...props }: FormInputProps) => {
   const [field, meta] = useField(props);
 
   return (
-    <div className={style.inputContainer}>
-      <label className={style.label} htmlFor={props?.id || props?.name}>
-        {label}
-      </label>
-      <input className={style.input} {...field} {...(props as any)} />
-      {meta.touched && meta.error ? <p className={style.inputError}>{meta.error}</p> : null}
-    </div>
+    <Box>
+      <TextField
+        {...field}
+        {...(props as any)}
+        label={label}
+        variant='outlined'
+        margin='normal'
+        fullWidth
+        error={meta.touched && !!meta.error}
+        helperText={meta.error}
+      />
+    </Box>
   );
 };
 export default FormInput;

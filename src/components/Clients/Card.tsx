@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+
 import style from './card.module.css';
 
 type CardProps = {
@@ -14,6 +15,7 @@ type CardProps = {
 };
 
 const Card = ({
+  id,
   imgSrc,
   name,
   phoneNumber,
@@ -21,13 +23,12 @@ const Card = ({
   street,
   subRegion,
   surname,
-  id,
   town,
 }: CardProps) => {
   return (
-    <Link to={`/clients/${id}`} className={style.card}>
+    <Link className={style.card} to={`/clients/${id}`}>
       <div className={style.avatar}>
-        <img src={imgSrc} alt='User avatar' className={style.avatarImg} />
+        <img alt='User avatar' className={style.avatarImg} src={imgSrc} />
       </div>
       <div className='data'>
         <p className='name' id='name'>

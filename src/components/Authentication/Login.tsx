@@ -1,15 +1,16 @@
 import { useFormik } from 'formik';
-import style from './Auth.module.css';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { getUserByUsername } from '../../Api/userApi';
+import { useUserContext } from '../../contexts/UserContext';
 import loginValidationScheema, {
   LoginValues,
 } from '../../yupValidationScheemas/loginValidationSchema';
-import { useUserContext } from '../../contexts/UserContext';
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { getUserByUsername } from '../../Api/userApi';
+import style from './Auth.module.css';
 
 const Login = () => {
-  const { user, logIn: saveUser } = useUserContext();
+  const { logIn: saveUser, user } = useUserContext();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -20,6 +21,7 @@ const Login = () => {
       const result = await getUserByUsername(data);
       saveUser(result);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
       saveUser(null);
       setError('Wrong name or password');
@@ -30,13 +32,13 @@ const Login = () => {
 
   const formik = useFormik<LoginValues>({
     initialValues: {
-      username: '',
       password: '',
+      username: '',
     },
-    validationSchema: loginValidationScheema,
     onSubmit: (values: LoginValues) => {
       logIn(values);
     },
+    validationSchema: loginValidationScheema,
   });
 
   useEffect(() => {
@@ -47,46 +49,42 @@ const Login = () => {
 
   return (
     <div>
-      <form onSubmit={formik.handleSubmit} className={style.form}>
+      <form className={style.form} onSubmit={formik.handleSubmit}>
         <div className={style.inputContainer}>
-          <label htmlFor='username' className={style.label}>
+          <label className={style.label} htmlFor='username'>
             Username
           </label>
           <input
-            type='text'
-            name='username'
-            id='username'
-            className={style.input}
-            value={formik.values.username}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
             autoComplete='username'
+            className={style.input}
+            id='username'
+            name='username'
+            type='text'
+            value={formik.values.username}
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
           />
-          <p className={style.inputError}>
-            {formik.touched.username && formik.errors.username}
-          </p>
+          <p className={style.inputError}>{formik.touched.username && formik.errors.username}</p>
         </div>
 
         <div className={style.inputContainer}>
-          <label htmlFor='password' className={style.label}>
+          <label className={style.label} htmlFor='password'>
             Password
           </label>
           <input
-            type='password'
-            name='password'
-            id='password'
             autoComplete='current-password'
             className={style.input}
+            id='password'
+            name='password'
+            type='password'
             value={formik.values.password}
-            onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
           />
         </div>
-        <p className={style.inputError}>
-          {formik.touched.password && formik.errors.password}
-        </p>
+        <p className={style.inputError}>{formik.touched.password && formik.errors.password}</p>
         {error && <p className={style.inputError}>{error}</p>}
-        <button type='submit' disabled={isLoading}>
+        <button disabled={isLoading} type='submit'>
           Submit
         </button>
       </form>

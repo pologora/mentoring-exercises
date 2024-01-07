@@ -27,3 +27,7 @@ button {
 button:hover {
   background-color: rgb(225, 224, 224);
 }
+
+.error {
+  color: red;
+}

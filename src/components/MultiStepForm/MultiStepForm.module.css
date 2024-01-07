@@ -1,2 +1,19 @@
 .multiStepContainer {
 }
+
+.orderCard {
+  border: 1px solid black;
+  max-width: 200px;
+  margin: 1rem;
+}
+
+.clientInfo {
+  border: 1px solid gray;
+  max-width: 250px;
+  margin: 1rem;
+}
+
+.ordersList {
+  display: flex;
+  flex-wrap: wrap;
+}

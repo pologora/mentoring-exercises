@@ -1,46 +1,38 @@
+/* eslint-disable no-magic-numbers */
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useFormik } from 'formik';
+import { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+
+import { getClientByID, updateClient } from '../../Api/clientsService';
+import { formInputElements } from '../../data/formInputs';
+import { TClient } from '../../types/customTypes';
 import clientValidationScheema from '../../yupValidationScheemas/clientValidationScheema';
 import style from './Clients.module.css';
-import { formInputElements } from '../../data/formInputs';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
-import { getClientByID, updateClient } from '../../Api/clientsService';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { TClient } from '../../types/customTypes';
 
 const initialValues = {
-  name: '',
-  surname: '',
-  street: '',
-  postCode: '',
-  town: '',
-  subRegion: '',
-  imgSrc: '',
-  phoneNumber: '',
   id: '',
+  imgSrc: '',
+  name: '',
+  phoneNumber: '',
+  postCode: '',
+  street: '',
+  subRegion: '',
+  surname: '',
+  town: '',
 };
 
 const UpdateClient = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const { isError, isLoading, data, error } = useQuery({
-    queryKey: ['client', id],
+  const { data, error, isError, isLoading } = useQuery({
     queryFn: () => {
       if (id) {
         return getClientByID(id);
       }
     },
-  });
-
-  const formik = useFormik<TClient>({
-    initialValues: initialValues,
-    validationSchema: clientValidationScheema,
-    onSubmit: (values: TClient) => {
-      if (id) {
-        handleUpdate(values);
-      }
-    },
+    queryKey: ['client', id],
   });
 
   const queryClient = useQueryClient();
@@ -49,12 +41,13 @@ const UpdateClient = () => {
     mutationFn: (values: TClient) => {
       return updateClient(values, values.id.toString());
     },
+    onError: () => {
+      // eslint-disable-next-line no-console
+      console.log('Cos poszlo nie tak');
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['clients'] });
       navigate('/clients');
-    },
-    onError: () => {
-      console.log('Cos poszlo nie tak');
     },
   });
 
@@ -63,6 +56,16 @@ const UpdateClient = () => {
       mutation.mutate(values);
     }
   };
+
+  const formik = useFormik<TClient>({
+    initialValues: initialValues,
+    onSubmit: (values: TClient) => {
+      if (id) {
+        handleUpdate(values);
+      }
+    },
+    validationSchema: clientValidationScheema,
+  });
 
   useEffect(() => {
     if (data) {
@@ -79,23 +82,21 @@ const UpdateClient = () => {
     return <div>{error.message}</div>;
   }
 
-  const renderedFormElements = formInputElements.map(({ title, required }) => {
+  const renderedFormElements = formInputElements.map(({ required, title }) => {
     return (
       <div key={title} className={style.inputContainer}>
-        <label htmlFor={title} className={style.label}>
+        <label className={style.label} htmlFor={title}>
           {`${title} ${required ? '*' : ''}`}
         </label>
         <input
-          id={title}
           className={style.input}
+          id={title}
           name={title}
-          onChange={formik.handleChange}
           value={formik.values[title]}
           onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
         />
-        <p className={style.inputError}>
-          {formik.touched[title] && formik.errors[title]}
-        </p>
+        <p className={style.inputError}>{formik.touched[title] && formik.errors[title]}</p>
       </div>
     );
   });
@@ -103,7 +104,7 @@ const UpdateClient = () => {
   return (
     <div>
       <h2>Edit client</h2>
-      <form onSubmit={formik.handleSubmit} className={style.form}>
+      <form className={style.form} onSubmit={formik.handleSubmit}>
         {renderedFormElements}
         <div>
           <button type='button' onClick={() => navigate(-1)}>

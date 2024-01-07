@@ -25,3 +25,22 @@ export type TUser = {
   password: string;
   id: string;
 };
+
+export type TInvoice = {
+  client: {
+    id: string;
+    imgSrc?: string;
+    name: string;
+    surname: string;
+    street: string;
+    postCode: string;
+    town: string;
+    subRegion?: string;
+    phoneNumber: string;
+  };
+  orders: TOrder[];
+  price: number;
+  date: Date;
+  month: string;
+  id: string;
+};

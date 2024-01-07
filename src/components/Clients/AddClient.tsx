@@ -1,65 +1,64 @@
-import { useFormik } from 'formik';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useFormik } from 'formik';
+
+import { createClient } from '../../Api/clientsService';
+import { formInputElements } from '../../data/formInputs';
 import clientValidationScheema, {
   ClientFormValues,
 } from '../../yupValidationScheemas/clientValidationScheema';
 import style from './Clients.module.css';
-import { formInputElements } from '../../data/formInputs';
-import { createClient } from '../../Api/clientsService';
 // import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const AddClient = () => {
-  const formik = useFormik<ClientFormValues>({
-    initialValues: {
-      name: '',
-      surname: '',
-      street: '',
-      postCode: '',
-      town: '',
-      subRegion: '',
-      imgSrc: '',
-      phoneNumber: '',
-    },
-    validationSchema: clientValidationScheema,
-    onSubmit: (values: ClientFormValues) => {
-      handleAdd(values);
-    },
-  });
-
   const queryClient = useQueryClient();
 
   const clientMutation = useMutation({
     mutationFn: (values: ClientFormValues) => {
       return createClient(values);
     },
+    onError: () => {
+      // eslint-disable-next-line no-console
+      console.log('Cos poszlo nie tak');
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['clients'] });
-    },
-    onError: () => {
-      console.log('Cos poszlo nie tak');
     },
   });
 
   const handleAdd = (values: ClientFormValues) => {
     clientMutation.mutate(values);
   };
+  const formik = useFormik<ClientFormValues>({
+    initialValues: {
+      imgSrc: '',
+      name: '',
+      phoneNumber: '',
+      postCode: '',
+      street: '',
+      subRegion: '',
+      surname: '',
+      town: '',
+    },
+    onSubmit: (values: ClientFormValues) => {
+      handleAdd(values);
+    },
+    validationSchema: clientValidationScheema,
+  });
 
-  const renderedFormElements = formInputElements.map(({ title, required }) => {
+  const renderedFormElements = formInputElements.map(({ required, title }) => {
     return (
       <div key={title} className={style.inputContainer}>
-        <label htmlFor={title} className={style.label}>
+        <label className={style.label} htmlFor={title}>
           {`${title} ${required ? '*' : ''}`}
         </label>
         <input
           className={style.input}
           name={title}
-          onChange={formik.handleChange}
           value={formik.values[title]}
           onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
         />
-        <p className={style.inputError}>
-          {formik.touched[title] && formik.errors[title]}
-        </p>
+        <p className={style.inputError}>{formik.touched[title] && formik.errors[title]}</p>
       </div>
     );
   });
@@ -67,7 +66,7 @@ const AddClient = () => {
   return (
     <div>
       <h2>Create client</h2>
-      <form onSubmit={formik.handleSubmit} className={style.form}>
+      <form className={style.form} onSubmit={formik.handleSubmit}>
         {renderedFormElements}
         <button type='submit'>Submit</button>
       </form>

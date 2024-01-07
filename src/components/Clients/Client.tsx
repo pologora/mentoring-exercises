@@ -1,10 +1,11 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import style from './Clients.module.css';
-import { IoMdArrowBack } from 'react-icons/io';
-import { deleteClient, getClientByID } from '../../Api/clientsService';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
+import { IoMdArrowBack } from 'react-icons/io';
+import { useNavigate, useParams } from 'react-router-dom';
+
+import { deleteClient, getClientByID } from '../../Api/clientsService';
 import ConfirmAlert from '../ConfirmAlert/ConfirmAlert';
+import style from './Clients.module.css';
 
 // const useDeleteClientMutation = (id: string, onSuccess?:()=>void,onError:()=>void)=> useMutation({
 //     mutationFn: () => {
@@ -21,11 +22,16 @@ const Client = () => {
   const queryClient = useQueryClient();
   const [confirmAlertIsOpen, setConfirmAlertIsOpen] = useState(false);
 
-  const { isLoading, isError, error, data } = useQuery({
-    queryKey: ['client', id],
+  const handleGetClientById = (id: string) => {
+    return getClientByID(id);
+  };
+
+  const navigateBackIndex = -1;
+  const { data, error, isError, isLoading } = useQuery({
     queryFn: () => {
       if (id) return handleGetClientById(id);
     },
+    queryKey: ['client', id],
   });
 
   const deleteClientMutation = useMutation({
@@ -33,18 +39,14 @@ const Client = () => {
       if (!id) throw new Error('No id');
       return deleteClient(id);
     },
+    onError: () => {
+      // notify("Nie udalo się usunac klienta")
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['clients'] });
       navigate('/clients');
     },
-    onError: () => {
-      // notify("Nie udalo się usunac klienta")
-    },
   });
-
-  const handleGetClientById = (id: string) => {
-    return getClientByID(id);
-  };
 
   const handleDeleteClient = async () => {
     deleteClientMutation.mutate();
@@ -86,20 +88,20 @@ const Client = () => {
   return (
     <div className={style.client}>
       <ConfirmAlert
-        open={confirmAlertIsOpen}
         confirmedAction={handleDeleteClient}
         handleClose={handleCloseConfirmAlert}
+        open={confirmAlertIsOpen}
         title='You are about to delete the client. This action cannot be undone.'
       />
       <button
         className={`${style.goBackBtn} ${style.btn}`}
-        onClick={() => navigate(-1)}
+        onClick={() => navigate(navigateBackIndex)}
       >
         <IoMdArrowBack />
         Back
       </button>
       <h3 className={style.clientTitle}>Client</h3>
-      <img src={data.data.imgSrc} alt='client' className={style.clientImg} />
+      <img alt='client' className={style.clientImg} src={data.data.imgSrc} />
       <div className={style.propsContainer}>{clientDataElements}</div>
       <div className={style.actionBtnsContainer}>
         <button className={style.deleteBtn} onClick={handleOpenCofirmAlert}>

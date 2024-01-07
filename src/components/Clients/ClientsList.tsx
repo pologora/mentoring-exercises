@@ -1,7 +1,8 @@
+import { ChangeEvent, useState } from 'react';
+
+import type { TClient } from '../../types/customTypes';
 import Card from './Card';
 import style from './Clients.module.css';
-import { useState, ChangeEvent } from 'react';
-import type { TClient } from '../../types/customTypes';
 
 type ClientsListProps = {
   cardsData: TClient[];
@@ -22,12 +23,7 @@ const ClientsList = ({ cardsData }: ClientsListProps) => {
   return (
     <div>
       <div className={style.searchContainer}>
-        <input
-          type='text'
-          id='name'
-          name='name'
-          onChange={filterChangeHandler}
-        />
+        <input id='name' name='name' type='text' onChange={filterChangeHandler} />
         <label htmlFor='name'>Wyszukaj po imieniu</label>
       </div>
       <div className={style.cardsList}>{cardsElements}</div>

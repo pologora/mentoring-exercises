@@ -1,3 +1,6 @@
+import { useQuery } from '@tanstack/react-query';
+
+import { QUERY_KEYS } from '../constants/constants';
 import { TOrder } from '../types/customTypes';
 import {
   createResource,
@@ -25,4 +28,21 @@ export const updateOrder = (data: TOrder, id: string) => {
 
 export const getAllOrders = () => {
   return getAllResource<TOrder[]>('orders');
+};
+
+export const getAllOrdersByClient = (id: string) => {
+  const filter = `?client=${id}`;
+  return getAllResource<TOrder[]>('orders', filter);
+};
+
+export const useGetAllOrdersByClient = (id: string) => {
+  return useQuery({
+    queryFn: () => getAllOrdersByClient(id),
+    queryKey: QUERY_KEYS.ordersByClient,
+  });
+};
+
+export const markOrderAsPaided = (id: string) => {
+  const data = { paid: true };
+  return updateResource(data, id, 'orders');
 };
