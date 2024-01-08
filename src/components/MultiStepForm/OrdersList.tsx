@@ -1,6 +1,8 @@
 import { TOrder } from '../../types/customTypes';
-import style from './MultiStepForm.module.css';
+
 import OrderCard from './OrderCard';
+
+import style from './MultiStepForm.module.css';
 
 type OrdersListType = {
   orders: TOrder[];

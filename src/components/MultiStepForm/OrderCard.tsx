@@ -1,7 +1,9 @@
 import { useFormikContext } from 'formik';
 
 import type { TOrder } from '../../types/customTypes';
+
 import { MultiFormValuesType } from './MultiFormInitialValues';
+
 import style from './MultiStepForm.module.css';
 
 type OrderCardProps = {

@@ -2,6 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 
 import { QUERY_KEYS } from '../constants/constants';
 import { TOrder } from '../types/customTypes';
+import { OrderFormValues } from '../yupValidationScheemas/orderValidationScheema';
+
 import {
   createResource,
   deleteResource,
@@ -10,7 +12,7 @@ import {
   updateResource,
 } from './resourceService';
 
-export const createOrder = (data: TOrder) => {
+export const createOrder = (data: OrderFormValues) => {
   return createResource(data, 'orders');
 };
 

@@ -1,30 +1,30 @@
-import { FieldAttributes, useField } from 'formik';
-import style from './FormStyle.module.css';
 import { ReactNode } from 'react';
 import { Box, TextField } from '@mui/material';
+import { Field, FieldAttributes, useField } from 'formik';
 
 type FormSelectProps = {
   label: string;
   children: ReactNode;
-} & FieldAttributes<{}>;
+} & FieldAttributes<object>;
 
-const FormSelect = ({ label, children, ...props }: FormSelectProps) => {
+const FormSelect = ({ children, label, ...props }: FormSelectProps) => {
   const [field, meta] = useField(props);
 
   return (
     <Box>
-      <TextField
+      <Field
         select
+        as={TextField}
         {...field}
-        {...(props as any)}
-        defaultValue=''
-        label={label}
+        {...props}
         fullWidth
+        defaultValue=''
         error={meta.touched && !!meta.error}
         helperText={meta.error}
+        label={label}
       >
         {children}
-      </TextField>
+      </Field>
     </Box>
   );
 };

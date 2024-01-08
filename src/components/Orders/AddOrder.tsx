@@ -1,40 +1,42 @@
-import style from './Orders.module.css';
+import { MenuItem } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
 import { Form, Formik } from 'formik';
+
+import { useGetAllClients } from '../../Api/clientsService';
+import { createOrder } from '../../Api/ordersService';
+import { useNotificationContext } from '../../contexts/NotificationContext';
+import { NotificationBgColor } from '../../enums/NotificationBgColor';
 import orderValidationSchema, {
   OrderFormValues,
 } from '../../yupValidationScheemas/orderValidationScheema';
-import { createOrder } from '../../Api/ordersService';
-import { useMutation } from '@tanstack/react-query';
-import { useGetAllClients } from '../../Api/clientsService';
-import NotificationAlert from '../NotificationAlert/NotificationAlert';
-import { useNotificationContext } from '../../contexts/NotificationContext';
-import { NotificationBgColor } from '../../enums/NotificationBgColor';
 import FormInput from '../FormElements/FormInput';
 import FormSelect from '../FormElements/FormSelect';
-import { MenuItem } from '@mui/material';
+import NotificationAlert from '../NotificationAlert/NotificationAlert';
+
+import style from './Orders.module.css';
 
 const initialValues = {
   client: '',
-  quantity: 0,
-  title: '',
   content: '',
   paid: false,
+  quantity: 0,
+  title: '',
 };
 
 const AddOrder = () => {
   const { handleChangeNotification } = useNotificationContext();
 
-  const { isError, isLoading, data, error } = useGetAllClients();
+  const { data, error, isError, isLoading } = useGetAllClients();
 
   const orderMutation = useMutation({
     mutationFn: (values: OrderFormValues) => {
       return createOrder(values);
     },
-    onSuccess: () => {
-      handleChangeNotification('Order successfully created', NotificationBgColor.success);
-    },
     onError: () => {
       handleChangeNotification('Unexpected error uccurred', NotificationBgColor.error);
+    },
+    onSuccess: () => {
+      handleChangeNotification('Order successfully created', NotificationBgColor.success);
     },
   });
 
@@ -66,12 +68,12 @@ const AddOrder = () => {
         }}
       >
         <Form className={style.form}>
-          <FormSelect label='Wybierz klienta' name='client' id='client'>
+          <FormSelect id='client' label='Wybierz klienta' name='client'>
             {clientsSelectOptions}
           </FormSelect>
-          <FormInput label='Quantity' name='quantity' id='quantity' type='number' />
-          <FormInput label='Title' name='title' id='title' />
-          <FormInput label='Content' name='content' id='content' />
+          <FormInput label='Quantity' name='quantity' type='number' />
+          <FormInput label='Title' name='title' />
+          <FormInput label='Content' name='content' />
           <button type='submit'>Add Order</button>
         </Form>
       </Formik>

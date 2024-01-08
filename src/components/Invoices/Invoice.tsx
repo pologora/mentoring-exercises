@@ -1,4 +1,5 @@
 import { TInvoice } from '../../types/customTypes';
+
 import style from './Invoices.module.css';
 
 type InvoiceType = {
