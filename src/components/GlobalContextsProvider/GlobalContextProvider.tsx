@@ -1,7 +1,10 @@
 import { ReactNode } from 'react';
-import { UserContextProvider } from '../../contexts/UserContext';
+import { Provider } from 'react-redux';
+
 import NotificationContextProvider from '../../contexts/NotificationContext';
 import ThemeContextProvider from '../../contexts/ThemeContext';
+import { UserContextProvider } from '../../contexts/UserContext';
+import { store } from '../../redux/store';
 
 type GlobalContextProviderProps = {
   children: ReactNode;
@@ -9,11 +12,13 @@ type GlobalContextProviderProps = {
 
 const GlobalContextProvider = ({ children }: GlobalContextProviderProps) => {
   return (
-    <UserContextProvider>
-      <NotificationContextProvider>
-        <ThemeContextProvider>{children}</ThemeContextProvider>
-      </NotificationContextProvider>
-    </UserContextProvider>
+    <Provider store={store}>
+      <UserContextProvider>
+        <NotificationContextProvider>
+          <ThemeContextProvider>{children}</ThemeContextProvider>
+        </NotificationContextProvider>
+      </UserContextProvider>
+    </Provider>
   );
 };
 export default GlobalContextProvider;

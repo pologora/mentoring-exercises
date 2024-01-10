@@ -1,12 +1,13 @@
-import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useFormik } from 'formik';
 
 import { getUserByUsername } from '../../Api/userApi';
 import { useUserContext } from '../../contexts/UserContext';
 import loginValidationScheema, {
   LoginValues,
 } from '../../yupValidationScheemas/loginValidationSchema';
+
 import style from './Auth.module.css';
 
 const Login = () => {

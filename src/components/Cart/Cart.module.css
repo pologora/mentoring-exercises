@@ -1,0 +1,12 @@
+.cartItemsList {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1rem;
+  gap: 1.5rem;
+}
+
+.orderLinkContainer {
+  border: 1px solid gray;
+  padding: 0.2rem;
+  flex-basis: 200px;
+}

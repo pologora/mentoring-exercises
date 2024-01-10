@@ -1,6 +1,6 @@
-import { Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Button } from '@mui/material';
 
 import { getClientByID } from '../../Api/clientsService';
 import {
@@ -116,7 +116,12 @@ const Order = () => {
       <Link to={`/clients/${client?.id}`}>{`${client?.name} ${client?.surname}`}</Link>
       <br />
       {JSON.stringify(order)}
-      <Button disabled={isLoading} variant='contained' onClick={handleOpenCofirmAlert}>
+      <Button
+        color='error'
+        disabled={isLoading}
+        variant='contained'
+        onClick={handleOpenCofirmAlert}
+      >
         Delete order
       </Button>
       <Button variant='outlined' onClick={handleMakePaided}>

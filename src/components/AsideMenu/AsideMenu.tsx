@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { menuData } from '../../data/menu';
-import style from './AsideMenu.module.css';
 import { Link } from 'react-router-dom';
+
+import { menuData } from '../../data/menu';
+
+import style from './AsideMenu.module.css';
 
 const AsideMenu = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -16,12 +18,14 @@ const AsideMenu = () => {
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
 
-  if (menuData.length === 0) {
+  const zeroArrayLength = 0;
+
+  if (menuData.length === zeroArrayLength) {
     return <div>No menu</div>;
   }
   return (
     <div>
-      <button onClick={toggleMenu} className={style.toggleMenuButton}>
+      <button className={style.toggleMenuButton} onClick={toggleMenu}>
         {isOpen ? 'Zamknij menu' : 'Otwórz menu'}
       </button>
       <div className={style.menuContainer}>{isOpen && menu}</div>

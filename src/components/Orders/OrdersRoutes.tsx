@@ -1,16 +1,17 @@
 import { Route, Routes } from 'react-router-dom';
-import OrdersLayout from './OrdersLayout';
+
+import AddOrder from './AddOrder';
 import Order from './Order';
 import Orders from './Orders';
-import AddOrder from './AddOrder';
+import OrdersLayout from './OrdersLayout';
 
 const OrdersRoutes = () => {
   return (
     <Routes>
       <Route element={<OrdersLayout />}>
         <Route index element={<Orders />} />
-        <Route path=':id' element={<Order />} />
-        <Route path='add' element={<AddOrder />}></Route>
+        <Route element={<Order />} path=':id' />
+        <Route element={<AddOrder />} path='add' />
       </Route>
     </Routes>
   );

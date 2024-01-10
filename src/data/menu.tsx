@@ -1,14 +1,15 @@
 import {
-  BsFillPeopleFill,
+  BsCart3,
+  BsEmojiNeutralFill,
   BsFillBagCheckFill,
   BsFillFileEarmarkRuledFill,
   BsFillHddRackFill,
-  BsCart3,
-  BsEmojiNeutralFill,
+  BsFillPeopleFill,
 } from 'react-icons/bs';
 import { FaHome, FaUserAstronaut } from 'react-icons/fa';
-import { MdChangeCircle } from 'react-icons/md';
 import { FiLogIn } from 'react-icons/fi';
+import { MdChangeCircle } from 'react-icons/md';
+import { MdOutlineAccountBalanceWallet } from 'react-icons/md';
 import { SiReadthedocs } from 'react-icons/si';
 
 export type MenuDataProps = {
@@ -19,59 +20,64 @@ export type MenuDataProps = {
 
 export const menuData = [
   {
-    linkName: 'Home',
-    link: '/',
     icon: <FaHome />,
+    link: '/',
+    linkName: 'Home',
   },
   {
-    linkName: 'Clients',
-    link: '/clients',
     icon: <BsFillPeopleFill />,
+    link: '/clients',
+    linkName: 'Clients',
   },
   {
-    linkName: 'Orders',
-    link: '/orders',
     icon: <BsFillBagCheckFill />,
+    link: '/orders',
+    linkName: 'Orders',
   },
   {
-    linkName: 'Invoices',
-    link: '/invoices',
     icon: <BsFillFileEarmarkRuledFill />,
+    link: '/invoices',
+    linkName: 'Invoices',
   },
   {
-    linkName: 'Posts',
-    link: '/posts',
     icon: <BsFillHddRackFill />,
+    link: '/posts',
+    linkName: 'Posts',
   },
   {
-    linkName: 'Recursion',
-    link: '/recursion',
     icon: <MdChangeCircle />,
+    link: '/recursion',
+    linkName: 'Recursion',
   },
   {
-    linkName: 'Children at bus',
-    link: '/children',
     icon: <BsEmojiNeutralFill />,
+    link: '/children',
+    linkName: 'Children at bus',
   },
   {
-    linkName: 'Cart',
-    link: '/cart',
     icon: <BsCart3 />,
+    link: '/cart',
+    linkName: 'Cart',
   },
   {
-    linkName: 'Users',
-    link: '/users',
     icon: <FaUserAstronaut />,
+    link: '/users',
+    linkName: 'Users',
   },
   {
-    linkName: 'Register',
-    link: '/register',
+    icon: <MdOutlineAccountBalanceWallet />,
+    link: '/money',
+    linkName: 'Account',
+  },
+  {
     icon: <SiReadthedocs />,
+    link: '/register',
+    linkName: 'Register',
   },
   {
-    linkName: 'Login',
-    link: '/login',
     icon: <FiLogIn />,
+    link: '/login',
+    linkName: 'Login',
   },
 ];
 export default menuData;

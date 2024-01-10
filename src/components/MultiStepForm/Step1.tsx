@@ -1,12 +1,13 @@
+import { useEffect } from 'react';
 import { MenuItem } from '@mui/material';
 import { useFormikContext } from 'formik';
-import { useEffect } from 'react';
 
 import { useGetAllClients } from '../../Api/clientsService';
 import { FormikStepProps } from '../../types/customInterfaces';
 import FormSelect from '../FormElements/FormSelect';
+
 import ClientInfo from './ClientInfo';
-import type { MultiFormValuesType } from './MultiFormInitialValues';
+import { initialValues, type MultiFormValuesType } from './MultiFormInitialValues';
 
 const Step1 = ({ label }: FormikStepProps) => {
   const { setValues, values } = useFormikContext<MultiFormValuesType>();
@@ -25,7 +26,7 @@ const Step1 = ({ label }: FormikStepProps) => {
 
   useEffect(() => {
     if (client) {
-      setValues((prev) => ({ ...prev, client }));
+      setValues(() => ({ ...initialValues, client }));
     }
   }, [clientId, client, setValues]);
 

@@ -1,39 +1,43 @@
-import { Suspense, lazy } from 'react';
-import './App.css';
+import { lazy, Suspense } from 'react';
+
 import AsideMenu from './components/AsideMenu/AsideMenu';
 import Footer from './components/Footer/Footer';
-import RecComp from './components/recursiveComponent/RecComp';
 import data from './components/recursiveComponent/data';
+import RecComp from './components/recursiveComponent/RecComp';
 import footerData from './data/footerData';
+
+import './App.css';
 const Posts = lazy(() => import('./components/Posts/Posts'));
-import ChildrenAtBus from './components/ChildrenAtBus/ChildrenAtBus';
 import { Route, Routes } from 'react-router-dom';
-import Home from './components/Home/Home';
-import NotFound from './components/NotFound/NotFound';
-import ClientsRoutes from './components/Clients/ClientsRoutes';
-import OrdersRoutes from './components/Orders/OrdersRoutes';
-import Register from './components/Authentication/Register';
+import { QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+import Account from './components/Account/Account';
 import Login from './components/Authentication/Login';
-import { QueryClientProvider, QueryClient, QueryCache } from '@tanstack/react-query';
+import Register from './components/Authentication/Register';
+import Cart from './components/Cart/Cart';
+import ChildrenAtBus from './components/ChildrenAtBus/ChildrenAtBus';
+import ClientsRoutes from './components/Clients/ClientsRoutes';
+import GlobalContextProvider from './components/GlobalContextsProvider/GlobalContextProvider';
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Header from './components/Header/Header';
-import ProtectedWrapper from './components/ProtectedWrapper/ProtectedWrapper';
-import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
-import Loading from './components/Loading/Loading';
-import GlobalContextProvider from './components/GlobalContextsProvider/GlobalContextProvider';
+import Home from './components/Home/Home';
 import AddInvoice from './components/Invoices/AddInvoice';
 import InvoicesRoutes from './components/Invoices/InvoicesRoutes';
+import Loading from './components/Loading/Loading';
+import NotFound from './components/NotFound/NotFound';
+import OrdersRoutes from './components/Orders/OrdersRoutes';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 const queryClient = new QueryClient({
-  queryCache: new QueryCache(),
   defaultOptions: {
     queries: {
       gcTime: 60000,
     },
   },
+  queryCache: new QueryCache(),
 });
 
-function App() {
+const App = () => {
   return (
     <>
       <ErrorBoundary>
@@ -48,10 +52,10 @@ function App() {
             <Header />
             <AsideMenu />
             <Routes>
-              <Route path='/' element={<Home />}></Route>
+              <Route element={<Home />} path='/' />
 
-              <Route path='/clients/*' element={<ClientsRoutes />} />
-              <Route path='/orders/*' element={<OrdersRoutes />} />
+              <Route element={<ClientsRoutes />} path='/clients/*' />
+              <Route element={<OrdersRoutes />} path='/orders/*' />
 
               <Route
                 path='/invoices/*'
@@ -61,10 +65,10 @@ function App() {
                   // </ProtectedWrapper>
                 }
               />
-              <Route path='/invoices/add' element={<AddInvoice />} />
+              <Route element={<AddInvoice />} path='/invoices/add' />
 
-              <Route path='/recursion' element={<RecComp data={data} />}></Route>
-              <Route path='/children' element={<ChildrenAtBus />}></Route>
+              <Route element={<RecComp data={data} />} path='/recursion' />
+              <Route element={<ChildrenAtBus />} path='/children' />
               <Route
                 path='/posts'
                 element={
@@ -72,10 +76,12 @@ function App() {
                     <Posts />
                   </Suspense>
                 }
-              ></Route>
-              <Route path='/register' element={<Register />}></Route>
-              <Route path='/login' element={<Login />}></Route>
-              <Route path='*' element={<NotFound />}></Route>
+              />
+              <Route element={<Cart />} path='/cart' />
+              <Route element={<Register />} path='/register' />
+              <Route element={<Login />} path='/login' />
+              <Route element={<Account />} path='/money' />
+              <Route element={<NotFound />} path='*' />
             </Routes>
 
             <Footer footerData={footerData} />
@@ -84,6 +90,6 @@ function App() {
       </ErrorBoundary>
     </>
   );
-}
+};
 
 export default App;

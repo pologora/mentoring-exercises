@@ -44,3 +44,8 @@ export type TInvoice = {
   month: string;
   id: string;
 };
+
+export type TCartItem = {
+  id: string;
+  title: string;
+};

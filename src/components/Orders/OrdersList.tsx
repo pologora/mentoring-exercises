@@ -1,12 +1,15 @@
-import style from './Orders.module.css';
-import OrderCard from './OrderCard';
-import { getAllOrders } from '../../Api/ordersService';
 import { useQuery } from '@tanstack/react-query';
 
+import { getAllOrders } from '../../Api/ordersService';
+
+import OrderCard from './OrderCard';
+
+import style from './Orders.module.css';
+
 const OrdersList = () => {
-  const { isLoading, isError, data, error } = useQuery({
-    queryKey: ['orders'],
+  const { data, error, isError, isLoading } = useQuery({
     queryFn: getAllOrders,
+    queryKey: ['orders'],
   });
 
   if (isLoading) {
@@ -18,7 +21,7 @@ const OrdersList = () => {
   }
 
   const renderedOrdersList = data?.data.map((order) => (
-    <OrderCard order={order} key={order.content} />
+    <OrderCard key={order.content} order={order} />
   ));
 
   return <div className={style.orderListContainer}>{renderedOrdersList}</div>;

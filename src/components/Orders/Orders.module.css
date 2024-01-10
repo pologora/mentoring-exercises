@@ -16,10 +16,19 @@
 }
 
 .orderCard {
+  max-width: 200px;
   padding: 0.5rem;
+  -webkit-box-shadow: -1px 1px 9px -4px rgba(66, 68, 90, 1);
+  -moz-box-shadow: -1px 1px 9px -4px rgba(66, 68, 90, 1);
+  box-shadow: -1px 1px 9px -4px rgba(66, 68, 90, 1);
 }
 
 .orderCard:hover {
   border: none;
-  background-color: aliceblue;
+}
+
+.buttonsContainer {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }

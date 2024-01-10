@@ -25,60 +25,36 @@
   ],
   "orders": [
     {
-      "client": "1",
-      "quantity": 1,
-      "title": "Title1",
-      "content": "conete 1 un",
+      "client": 1,
+      "content": "Apples and lemon",
       "paid": false,
+      "quantity": 1,
+      "title": "Order nr 1",
       "id": 1
     },
     {
-      "client": "2",
-      "quantity": 2,
-      "title": "asdfasdfas",
-      "content": "dfasfdadsfadf",
+      "client": 2,
+      "content": "Potatos and",
       "paid": false,
+      "quantity": 4,
+      "title": "Potatos",
       "id": 2
     },
     {
-      "client": "2",
-      "quantity": 5,
-      "title": "112341234",
-      "content": "wdfsafasdf22",
+      "client": 1,
+      "content": "Milk and chekolade",
       "paid": false,
+      "quantity": 6,
+      "title": "Milka",
       "id": 3
     },
     {
-      "client": "1",
-      "quantity": 3,
-      "title": "asdfffaasdf",
-      "content": "asdfdasdfaaa",
-      "paid": true,
-      "id": 4
-    },
-    {
       "client": 1,
-      "quantity": 3,
-      "title": "asdfasdf",
-      "content": "asdfadfadsf",
-      "paid": true,
-      "id": 5
-    },
-    {
-      "client": 1,
-      "quantity": 6,
-      "title": "asdfadfafd",
-      "content": "adsfasdfasdf",
-      "paid": true,
-      "id": 6
-    },
-    {
-      "client": 1,
-      "quantity": 3,
-      "title": "asdfasdf",
-      "content": "adfadsfaaa",
+      "content": "Table of content",
       "paid": false,
-      "id": 7
+      "quantity": 3,
+      "title": "Firefly",
+      "id": 4
     }
   ],
   "users": [
@@ -93,84 +69,7 @@
       "username": "username2",
       "password": "12345678",
       "id": 2
-    },
-    {
-      "name": "name3",
-      "username": "username3",
-      "password": "12345678",
-      "id": 3
     }
   ],
-  "invoices": [
-    {
-      "client": {
-        "id": 1,
-        "imgSrc": "https://images.unsplash.com/photo-1661869535393-872dea2d9f8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
-        "name": "Zbigniew",
-        "surname": "Herbert",
-        "street": "TestStreet",
-        "postCode": "00-123",
-        "town": "Towns",
-        "subRegion": "Region",
-        "phoneNumber": "+48123456789"
-      },
-      "date": "2024-01-07T19:13:28.084Z",
-      "month": "September",
-      "orders": [
-        {
-          "client": "1",
-          "quantity": 1,
-          "title": "Title1",
-          "content": "conete 1 un",
-          "paid": false,
-          "id": 1
-        },
-        {
-          "client": "1",
-          "quantity": 3,
-          "title": "asdfffaasdf",
-          "content": "asdfdasdfaaa",
-          "paid": false,
-          "id": 4
-        }
-      ],
-      "price": "7777",
-      "id": 1
-    },
-    {
-      "client": {
-        "id": 1,
-        "imgSrc": "https://images.unsplash.com/photo-1661869535393-872dea2d9f8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
-        "name": "Zbigniew",
-        "surname": "Herbert",
-        "street": "TestStreet",
-        "postCode": "00-123",
-        "town": "Towns",
-        "subRegion": "Region",
-        "phoneNumber": "+48123456789"
-      },
-      "date": "2024-01-07T19:13:28.084Z",
-      "month": "September",
-      "orders": [
-        {
-          "client": 1,
-          "quantity": 3,
-          "title": "asdfasdf",
-          "content": "asdfadfadsf",
-          "paid": false,
-          "id": 5
-        },
-        {
-          "client": 1,
-          "quantity": 6,
-          "title": "asdfadfafd",
-          "content": "adsfasdfasdf",
-          "paid": false,
-          "id": 6
-        }
-      ],
-      "price": "2000",
-      "id": 2
-    }
-  ]
+  "invoices": []
 }

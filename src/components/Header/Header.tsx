@@ -1,9 +1,13 @@
+/* eslint-disable no-magic-numbers */
 import { Avatar } from '@mui/material';
-import Logo from '../Logo/Logo';
-import style from './Header.module.css';
-import LogOutButton from '../LogOutButton/LogOutButton';
+
 import { useUserContext } from '../../contexts/UserContext';
+import AccountBalance from '../AccountBalance/AccountBalance';
+import Logo from '../Logo/Logo';
+import LogOutButton from '../LogOutButton/LogOutButton';
 import ThemeSelect from '../ThemeSelect/ThemeSelect';
+
+import style from './Header.module.css';
 
 const Header = () => {
   const { user } = useUserContext();
@@ -16,11 +20,8 @@ const Header = () => {
           <ThemeSelect />
         </div>
         <div className={style.avatarContainer}>
-          {user && (
-            <Avatar alt={user.name}>
-              {user.name.slice(0, 2).toUpperCase()}
-            </Avatar>
-          )}
+          <AccountBalance />
+          {user && <Avatar alt={user.name}>{user.name.slice(0, 2).toUpperCase()}</Avatar>}
           <LogOutButton />
         </div>
       </div>
