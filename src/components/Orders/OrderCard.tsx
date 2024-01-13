@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 
-import { addOrder, removeOrder } from '../../redux/orderSlice';
-import { selectOrders } from '../../redux/store';
+import { addOrder, removeOrder, selectOrders } from '../../redux/orderSlice';
+import { useAppDispatch } from '../../redux/store';
 import { TOrder } from '../../types/customTypes';
 
 import style from './Orders.module.css';
 
 const OrderCard = ({ order }: { order: TOrder }) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const ordersInCart = useSelector(selectOrders);
   const selectedOrderId = order.id;
 

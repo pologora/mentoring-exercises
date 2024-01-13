@@ -16,7 +16,7 @@ import {
 import NotificationAlert from '../NotificationAlert/NotificationAlert';
 
 import { initialValues, MultiFormValuesType } from './MultiFormInitialValues';
-import MultiStepForm from './MultiStepForm';
+import { MultiSteperForm } from './MultiStepForm';
 import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
@@ -36,10 +36,11 @@ const MultistepWrapper = () => {
         NotificationBgColor.error,
       );
     },
-    onSuccess: (values: AxiosResponse<TInvoice>) => {
-      values.data.orders.forEach(async (order) => {
-        await markOrderAsPaided(order.id);
+    onSuccess: async (values: AxiosResponse<TInvoice>) => {
+      const promises = values.data.orders.map(async (order) => {
+        return markOrderAsPaided(order.id);
       });
+      await Promise.all(promises);
 
       handleChangeNotification('Faktura została dodana', NotificationBgColor.success);
       navigate('/invoices');
@@ -55,14 +56,23 @@ const MultistepWrapper = () => {
     helpers.resetForm();
   };
 
+  /*
+  steps={
+        [
+           <Step1 label='Step1' validationSchema={step1Schema} />,
+            <Step2 label='Step2' validationSchema={step2Schema} />,
+            <Step3 label='Step3' validationSchema={step3Schema} />
+        ]
+      }
+  */
   return (
     <>
       <NotificationAlert />
-      <MultiStepForm initialValues={initialValues} onSubmit={handleSubmit}>
+      <MultiSteperForm initialValues={initialValues} onSubmit={handleSubmit}>
         <Step1 label='Step1' validationSchema={step1Schema} />
         <Step2 label='Step2' validationSchema={step2Schema} />
         <Step3 label='Step3' validationSchema={step3Schema} />
-      </MultiStepForm>
+      </MultiSteperForm>
     </>
   );
 };

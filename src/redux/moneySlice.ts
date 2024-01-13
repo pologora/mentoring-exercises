@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { RootState } from './store';
+
 export interface InitialState {
   money: number;
 }
@@ -23,3 +25,5 @@ export const moneySlicer = createSlice({
 
 export const { deposit, withdraw } = moneySlicer.actions;
 export default moneySlicer.reducer;
+
+export const selectMoney = (state: RootState) => state.money.money;

@@ -2,6 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { TCartItem } from '../types/customTypes';
 
+import { RootState } from './store';
+
 interface InitialState {
   orders: TCartItem[];
 }
@@ -27,3 +29,5 @@ export const orderReducer = createSlice({
 
 export const { addOrder, removeOrder } = orderReducer.actions;
 export default orderReducer.reducer;
+
+export const selectOrders = (state: RootState) => state.orders.orders;

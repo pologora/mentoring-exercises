@@ -1,3 +1,4 @@
+import { useDispatch } from 'react-redux';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import moneyReducer from './moneySlice';
@@ -14,5 +15,5 @@ export const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-export const selectMoney = (state: RootState) => state.money.money;
-export const selectOrders = (state: RootState) => state.orders.orders;
+
+export const useAppDispatch: () => AppDispatch = useDispatch;

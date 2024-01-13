@@ -9,10 +9,11 @@ type MultiSteperProps = {
   children: ReactNode;
 } & FormikConfig<MultiFormValuesType>;
 
-const MultiSteper = ({ children, ...props }: MultiSteperProps) => {
+const FIRST_STEP_INDEX = 0;
+
+export const MultiSteperForm = ({ children, ...props }: MultiSteperProps) => {
   const steps = React.Children.toArray(children) as React.ReactElement<FormikStepProps>[];
-  const firstStep = 0;
-  const [step, setStep] = useState(firstStep);
+  const [step, setStep] = useState(FIRST_STEP_INDEX);
 
   const oneStep = 1;
 
@@ -22,7 +23,7 @@ const MultiSteper = ({ children, ...props }: MultiSteperProps) => {
   const isLastStep = step >= totalSteps - 1;
 
   const back = () => {
-    if (step > firstStep) {
+    if (step > FIRST_STEP_INDEX) {
       setStep((prev) => prev - oneStep);
     }
   };
@@ -56,7 +57,7 @@ const MultiSteper = ({ children, ...props }: MultiSteperProps) => {
           </Stepper>
           {currentChild}
           <br />
-          <Button disabled={step <= firstStep} variant='contained' onClick={back}>
+          <Button disabled={step <= FIRST_STEP_INDEX} variant='contained' onClick={back}>
             Back
           </Button>
           <Button type='submit' variant='contained'>
@@ -67,4 +68,3 @@ const MultiSteper = ({ children, ...props }: MultiSteperProps) => {
     </Formik>
   );
 };
-export default MultiSteper;
